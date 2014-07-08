@@ -17,6 +17,7 @@ var coffee_path = './src/coffee';
 var less_path = './src/less';
 var haml_path = './src/haml';
 var out_path = './dist';
+var haml_options = {doubleQuote: true};
 var on_error = function(err) { console.error(err.message); };
 
 
@@ -44,7 +45,7 @@ gulp.task('coffee', function() {
 // Compile Haml into HTML
 gulp.task('haml', function() {
   return gulp.src(haml_path + '/**/*.haml', {read: false}).
-              pipe(haml().on('error', on_error)).
+              pipe(haml(haml_options).on('error', on_error)).
               pipe(gulp.dest(out_path));
 });
 
@@ -52,7 +53,7 @@ gulp.task('haml', function() {
 gulp.task('haml-watch', function() {
   return gulp.src(haml_path + '/**/*.haml', {read: false}).
               pipe(watch()).
-              pipe(haml().on('error', on_error)).
+              pipe(haml(haml_options).on('error', on_error)).
               pipe(gulp.dest(out_path));
 });
 
