@@ -8,7 +8,7 @@
  # Controller of the seasonSoundApp
 ###
 angular.module('seasonSoundApp')
-  .controller 'SeasonCtrl', ($scope, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc) ->
+  .controller 'SeasonCtrl', ($scope, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc) ->
     $scope.lastfm_user = LastfmChartsSvc.user
     $scope.load_status = LastfmChartsSvc.load_status
     $scope.year_charts = LastfmChartsSvc.year_charts
@@ -69,3 +69,13 @@ angular.module('seasonSoundApp')
     $scope.$watch 'year_chart.tracks_loaded', filter_tracks
     $scope.$watch 'track_filters.min_play_count', filter_tracks
     $scope.$watch 'track_filters.artist', filter_tracks
+
+    $scope.download_csv = ->
+      csv = $scope.year_chart.to_csv()
+      $window.open(encodeURI(csv), '_blank')
+
+    $scope.download_json = ->
+      json = $scope.year_chart.to_json()
+      url = 'data:application/json,' + json.replace(/([[{,])/g, '$1%0a')
+      win = $window.open(url, '_blank')
+      win.focus()

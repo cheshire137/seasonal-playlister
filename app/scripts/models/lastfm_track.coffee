@@ -10,8 +10,10 @@ class LastfmTrack
     @artist_mbid = data.artist.mbid
     @play_count = data.playcount
     @url = data.url
-    if @url.indexOf('http://') < 0
+    if @url && @url.indexOf('http://') < 0
       @url = 'http://' + @url
+    if @url
+      @url = encodeURI(@url)
     @id = @mbid || @url
     @small_image = data.image.filter((i) -> i.size == 'small')[0]['#text']
     @medium_image = data.image.filter((i) -> i.size == 'medium')[0]['#text']
@@ -20,7 +22,7 @@ class LastfmTrack
       @artist_url = null
     else
       encoded_artist = encodeURIComponent(@artist).replace(/%20/g, '+')
-      @artist_url = "http://www.last.fm/music/#{encoded_artist}"
+      @artist_url = encodeURI('http://www.last.fm/music/') + encoded_artist
     unless @large_image
       @large_image = '/images/missing-track-image.png'
 

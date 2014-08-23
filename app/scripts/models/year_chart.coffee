@@ -76,4 +76,39 @@ class YearChart
   each_winter: (callback) ->
     @each @winter_charts(), callback
 
+  to_json: ->
+    list = []
+    for track in @filtered_tracks
+      list.push
+        musicbrainz_id: track.mbid
+        track: track.name
+        track_url: track.url
+        artist: track.artist
+        artist_url: track.artist_url
+        play_count: track.play_count
+    JSON.stringify(list)
+
+  to_csv: ->
+    csv = 'data:text/csv;charset=utf-8,';
+    csv += 'MusicBrainz ID,'
+    csv += 'Track,'
+    csv += 'Track URL,'
+    csv += 'Artist,'
+    csv += 'Artist URL,'
+    csv += "Play Count\n"
+    quote = (str) ->
+      '"' + str.replace(/"/g, "'") + '"'
+    index = 0
+    num_tracks = @filtered_tracks.length
+    for track in @filtered_tracks
+      csv += quote(track.mbid) + ','
+      csv += quote(track.name) + ','
+      csv += (if track.url then quote(track.url) else '') + ','
+      csv += quote(track.artist) + ','
+      csv += (if track.artist_url then quote(track.artist_url) else '') + ','
+      csv += track.play_count
+      csv += "\n" if index < num_tracks - 1
+      index += 1
+    csv
+
 (exports ? this).YearChart = YearChart
