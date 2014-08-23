@@ -30,6 +30,13 @@ class YearChart
       if result
         @filtered_tracks.push track
 
+  season_chart_count: (season) ->
+    switch season
+      when 'spring' then @spring_charts().length
+      when 'summer' then @summer_charts().length
+      when 'fall' then @fall_charts().length
+      when 'winter' then @winter_charts().length
+
   spring_charts: ->
     @charts.filter((chart) -> chart.is_spring())
 

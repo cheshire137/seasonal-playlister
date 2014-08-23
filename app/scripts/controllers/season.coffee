@@ -8,7 +8,7 @@
  # Controller of the seasonSoundApp
 ###
 angular.module('seasonSoundApp')
-  .controller 'SeasonCtrl', ($scope, $routeParams, $cookieStore, LastfmChartsSvc) ->
+  .controller 'SeasonCtrl', ($scope, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc) ->
     $scope.lastfm_user = LastfmChartsSvc.user
     $scope.load_status = LastfmChartsSvc.load_status
     $scope.year_charts = LastfmChartsSvc.year_charts
@@ -19,6 +19,9 @@ angular.module('seasonSoundApp')
     $scope.season =
       name: $routeParams.season
       label: undefined
+
+    $scope.wipe_notifications = ->
+      NotificationSvc.wipe_notifications()
 
     $scope.season.label = $scope.season.name.charAt(0).toUpperCase() +
                           $scope.season.name.slice(1)
@@ -53,7 +56,10 @@ angular.module('seasonSoundApp')
     $scope.$watch 'load_status.charts', ->
       return unless $scope.load_status.charts
       LastfmChartsSvc.load_year_chart $routeParams.year
-      $scope.year_chart.each_season $scope.season.name, week_handler
+      if $scope.year_chart.season_chart_count($scope.season.name) < 1
+        $scope.year_chart.tracks_loaded = true
+      else
+        $scope.year_chart.each_season $scope.season.name, week_handler
 
     filter_tracks = ->
       return unless $scope.year_chart.tracks_loaded

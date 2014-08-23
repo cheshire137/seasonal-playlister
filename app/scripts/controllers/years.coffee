@@ -8,7 +8,7 @@
  # Controller of the seasonSoundApp
 ###
 angular.module('seasonSoundApp')
-  .controller 'YearsCtrl', ($scope, $routeParams, $cookieStore, LastfmChartsSvc) ->
+  .controller 'YearsCtrl', ($scope, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc) ->
     $scope.lastfm_user = LastfmChartsSvc.user
     $scope.load_status = LastfmChartsSvc.load_status
     $scope.year_charts = LastfmChartsSvc.year_charts
@@ -16,7 +16,7 @@ angular.module('seasonSoundApp')
     $scope.chart_filters = {}
 
     $scope.wipe_notifications = ->
-      Notification.wipe_notifications()
+      NotificationSvc.wipe_notifications()
 
     unless $routeParams.user == $cookieStore.get('lastfm_user')
       $cookieStore.put('lastfm_user', $routeParams.user)
@@ -31,6 +31,8 @@ angular.module('seasonSoundApp')
         cutoff_date = $scope.lastfm_user.date_registered
         return unless cutoff_date
         LastfmChartsSvc.get_weekly_chart_list_after_date user_name, cutoff_date
+
+    unless $scope.load_status.neighbors
       LastfmChartsSvc.get_user_neighbors user_name
 
     $scope.slice_range = (array, count) ->

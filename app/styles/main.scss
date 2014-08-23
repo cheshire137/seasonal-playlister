@@ -35,6 +35,16 @@ a[ng-click], a[clip-click] {
   padding: 0.2em 0;
 }
 
+.btn-lastfm {
+  background-color: #c91e24;
+  color: white;
+
+  &:hover, &:focus {
+    color: white;
+    background-color: #db3d43;
+  }
+}
+
 .footer {
   margin-top: $line-height-computed;
   padding-top: $line-height-computed;

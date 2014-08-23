@@ -18,6 +18,7 @@ angular.module('seasonSoundApp')
         @load_status =
           charts: false
           chart: false
+          neighbors: false
 
       on_error: (data, status, headers, config) =>
         Notification.error data
@@ -61,6 +62,7 @@ angular.module('seasonSoundApp')
             for i in [0...Math.min(8, data.neighbours.user.length)] by 1
               user_data = data.neighbours.user[i]
               @neighbors.push new LastfmNeighbor(user_data)
+          @load_status.neighbors = true
         $http.get(LastfmSvc.get_user_neighbors_url(user_name)).
               success(on_success).error(@on_error)
 
