@@ -12,6 +12,6 @@ class LastfmTrack
     @medium_image = data.image.filter((i) -> i.size == 'medium')[0]['#text']
     @large_image = data.image.filter((i) -> i.size == 'large')[0]['#text']
     unless @large_image
-      @large_image = '/img/missing-track-image.png'
+      @large_image = '/images/missing-track-image.png'
 
 (exports ? this).LastfmTrack = LastfmTrack

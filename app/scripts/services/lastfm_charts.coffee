@@ -43,21 +43,17 @@ angular.module('seasonSoundApp')
             year_chart.charts.push week_chart
             @year_charts.push year_chart
 
-      get_chart_from_year_charts: (from, to) ->
+      get_year_chart_from_year_charts: (year) ->
         for year_chart in @year_charts
-          for chart in year_chart.charts
-            if chart.from == from && chart.to == to
-              return chart
+          return year_chart if year_chart.year == year
         return false
 
-      load_chart: (from, to) ->
-        chart = @get_chart_from_year_charts(from, to)
-        unless chart
-          chart = new LastfmChart
-            from: from
-            to: to
+      load_year_chart: (year) ->
+        year = parseInt(year, 10)
+        chart = @get_year_chart_from_year_charts(year)
         for key, value of chart
           @chart[key] = value
+        @load_status.chart = true
 
       get_user_neighbors: (user_name) ->
         on_success = (data, status, headers, config) =>
@@ -94,5 +90,19 @@ angular.module('seasonSoundApp')
               error (data, status, headers, config) =>
                 NotificationSvc.error data
                 @load_status.charts = true
+
+      get_weekly_track_chart: (user, chart, callback) ->
+        console.log 'fetching', chart.to_s()
+        on_success = (data, status, headers, config) =>
+          if data.weeklytrackchart.track
+            for track_data in data.weeklytrackchart.track
+              chart.tracks.push(new LastfmTrack(track_data))
+            callback()
+          else if data.error
+            Notification.error data.message
+        $http.get(LastfmSvc.get_weekly_track_chart_url(user, chart)).
+              success(on_success).
+              error (data, status, headers, config) =>
+                Notification.error data
 
     new LastfmCharts()

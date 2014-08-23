@@ -32,4 +32,10 @@ angular.module('seasonSoundApp')
         @get_api_url 'user.getweeklychartlist',
           user: user
 
+      get_weekly_track_chart_url: (user, chart) ->
+        @get_api_url 'user.getweeklytrackchart',
+          user: user
+          from: chart.from
+          to: chart.to
+
     new Lastfm()

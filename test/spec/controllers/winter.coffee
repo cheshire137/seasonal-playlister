@@ -1,17 +1,17 @@
 'use strict'
 
-describe 'Controller: PlaylistCtrl', ->
+describe 'Controller: WinterCtrl', ->
 
   # load the controller's module
   beforeEach module 'seasonSoundApp'
 
-  PlaylistCtrl = {}
+  WinterCtrl = {}
   scope = {}
 
   # Initialize the controller and a mock scope
   beforeEach inject ($controller, $rootScope) ->
     scope = $rootScope.$new()
-    PlaylistCtrl = $controller 'PlaylistCtrl', {
+    WinterCtrl = $controller 'WinterCtrl', {
       $scope: scope
     }
 

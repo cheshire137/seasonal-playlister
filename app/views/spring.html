@@ -1,0 +1,41 @@
+<div class="page-header clearfix">
+  <h1 class="back-link-container">
+    <a class="back-link" ng-href="#/lastfm/{{lastfm_user.user_name}}" ng-click="wipe_notifications()" tooltip-placement="right" tooltip="Choose a different season">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+  </h1>
+  <div class="pull-left" ng-if="lastfm_user.id">
+    <a class="lastfm-user-link" href="{{lastfm_user.url}}" tooltip="{{lastfm_user.user_name}}">
+      <img class="lastfm-user-image img-circle" height="64" ng-src="{{lastfm_user.medium_image}}" width="64">
+    </a>
+  </div>
+  <h1>Spring {{year_chart.year}}</h1>
+</div>
+<div ng-hide="year_chart.tracks_loaded">
+  <p>
+    Loading listening history from Last.fm...
+  </p>
+</div>
+<div ng-if="year_chart.tracks_loaded &amp;&amp; year_chart.tracks.length &lt; 1">
+  <p>
+    There is no listening history for Last.fm user {{lastfm_user.user_name}} in spring {{year_chart.year}}.
+  </p>
+  <p>
+    <a ng-href="#/lastfm/{{lastfm_user.user_name}}" ng-click="wipe_notifications()">
+      &larr; Choose a different season
+    </a>
+  </p>
+</div>
+<a class="track" ng-href="{{track.url}}" ng-id="{{track.mbid}}" ng-class="{matching: track.matching, matched: track.matched, missing: track.missing}" ng-repeat="track in year_chart.tracks" target="_blank">
+  <img ng-src="{{track.large_image}}">
+  <div class="track-info">
+    <span class="track-name" tooltip-placement="bottom" tooltip="{{track.name}}">
+      {{track.name}}
+    </span>
+    <span class="track-artist-divider">by</span>
+    <span class="artist-name" tooltip-placement="bottom" tooltip="{{track.artist}}">
+      {{track.artist}}
+    </span>
+    <span class="play-count">{{track.play_count}}x</span>
+  </div>
+</a>

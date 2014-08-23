@@ -2,25 +2,17 @@
 
 ###*
  # @ngdoc function
- # @name seasonSoundApp.controller:LastfmSeasonsCtrl
+ # @name seasonSoundApp.controller:SpringCtrl
  # @description
- # # LastfmSeasonsCtrl
+ # # SpringCtrl
  # Controller of the seasonSoundApp
 ###
 angular.module('seasonSoundApp')
-  .controller 'LastfmSeasonsCtrl', ($scope, $routeParams, $cookieStore, LastfmChartsSvc) ->
+  .controller 'SpringCtrl', ($scope, $routeParams, $cookieStore, LastfmChartsSvc) ->
     $scope.lastfm_user = LastfmChartsSvc.user
     $scope.load_status = LastfmChartsSvc.load_status
     $scope.year_charts = LastfmChartsSvc.year_charts
-    $scope.lastfm_neighbors = LastfmChartsSvc.neighbors
-    $scope.chart_filters = {}
-
-    $scope.wipe_notifications = ->
-      Notification.wipe_notifications()
-
-    $scope.chart_year_filter = (year_chart) ->
-      return true unless $scope.chart_filters.year_chart
-      year_chart.year == $scope.chart_filters.year_chart.year
+    $scope.year_chart = LastfmChartsSvc.chart
 
     unless $routeParams.user == $cookieStore.get('lastfm_user')
       $cookieStore.put('lastfm_user', $routeParams.user)
@@ -35,4 +27,20 @@ angular.module('seasonSoundApp')
         cutoff_date = $scope.lastfm_user.date_registered
         return unless cutoff_date
         LastfmChartsSvc.get_weekly_chart_list_after_date user_name, cutoff_date
-      LastfmChartsSvc.get_user_neighbors user_name
+
+    on_week_chart_loaded = (week_chart, is_last) ->
+      for track in week_chart.tracks
+        $scope.year_chart.tracks.push track
+      if is_last
+        $scope.year_chart.tracks_loaded = true
+
+    week_handler = (week_chart, index, is_last) ->
+      user = $scope.lastfm_user.user_name
+      handler = ->
+        on_week_chart_loaded week_chart, is_last
+      LastfmChartsSvc.get_weekly_track_chart user, week_chart, handler
+
+    $scope.$watch 'load_status.charts', ->
+      return unless $scope.load_status.charts
+      LastfmChartsSvc.load_year_chart $routeParams.year
+      $scope.year_chart.each_spring week_handler
