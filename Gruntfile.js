@@ -419,6 +419,16 @@ module.exports = function (grunt) {
     }
   });
 
+  grunt.registerTask('rackup', function() {
+    var spawn = require('child_process').spawn;
+    var rackup = spawn('rackup');
+    rackup.stdout.on('data', function (data) {
+      process.stdout.write('[rackup]: ' + data.toString());
+    });
+    rackup.stderr.on('data', function (data) {
+      process.stdout.write('[rackup]: ' + data.toString());
+    });
+  });
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
@@ -430,7 +440,8 @@ module.exports = function (grunt) {
       'wiredep',
       'concurrent:server',
       'autoprefixer',
-      'connect:livereload',
+      // 'connect:livereload',
+      'rackup',
       'watch'
     ]);
   });
