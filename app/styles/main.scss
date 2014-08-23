@@ -102,7 +102,7 @@ h1 {
     display: inline-block;
   }
 
-  .lastfm-user-since {
+  .lastfm-user-since, .playlist-description {
     display: block;
     font-size: $font-size-base;
     color: $gray-light;

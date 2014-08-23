@@ -34,6 +34,7 @@
 </div>
 <div ng-hide="year_chart.tracks_loaded">
   <p>
+    <i class="fa fa-spinner fa-spin"></i>
     Loading listening history from Last.fm...
   </p>
 </div>
@@ -94,9 +95,9 @@
       </table>
     </div>
   </div>
-  <div class="col-sm-4 sidebar">
+  <div class="col-sm-4 sidebar" ng-show="year_chart.filtered_tracks.length &gt; 0">
     <h3 class="sidebar-header">Options</h3>
-    <ul class="list-unstyled" ng-show="year_chart.filtered_tracks.length &gt; 0">
+    <ul class="list-unstyled">
       <li>
         <a ng-click="download_csv()">Download playlist as CSV</a>
       </li>

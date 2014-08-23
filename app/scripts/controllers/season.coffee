@@ -8,17 +8,21 @@
  # Controller of the seasonSoundApp
 ###
 angular.module('seasonSoundApp')
-  .controller 'SeasonCtrl', ($scope, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc) ->
+  .controller 'SeasonCtrl', ($scope, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc, GoogleSvc) ->
     $scope.lastfm_user = LastfmChartsSvc.user
     $scope.load_status = LastfmChartsSvc.load_status
     $scope.year_charts = LastfmChartsSvc.year_charts
     $scope.year_chart = LastfmChartsSvc.chart
     $scope.track_filters =
-      min_play_count: 3
-      artist: 'all'
+      min_play_count: $routeParams.min_play_count || 3
+      artist: $routeParams.artist || 'all'
     $scope.season =
       name: $routeParams.season
       label: undefined
+    $scope.auth_status =
+      have_token: false
+      access_token: $cookieStore.get('access_token')
+      is_verified: false
 
     $scope.wipe_notifications = ->
       NotificationSvc.wipe_notifications()
@@ -79,3 +83,21 @@ angular.module('seasonSoundApp')
       url = 'data:application/json,' + json.replace(/([[{,])/g, '$1%0a')
       win = $window.open(url, '_blank')
       win.focus()
+
+    $scope.google_authenticate = ->
+      GoogleSvc.authenticate()
+
+    $scope.$watch 'auth_status.access_token', ->
+      $scope.auth_status.have_token = $scope.auth_status.access_token &&
+                                      $scope.auth_status.access_token != ''
+      return unless $scope.auth_status.have_token
+      on_success = (data) ->
+        $scope.auth_status.is_verified = true
+        $scope.auth_status.have_token = true
+      on_error = ->
+        $scope.auth_status.is_verified = false
+        $scope.auth_status.access_token = ''
+        $scope.auth_status.have_token = false
+        $cookieStore.remove('access_token')
+      GoogleSvc.verify($scope.auth_status.access_token).
+                then on_success, on_error

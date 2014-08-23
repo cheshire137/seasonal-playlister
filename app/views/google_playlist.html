@@ -7,22 +7,27 @@
       <img class="lastfm-user-image img-circle" height="64" ng-src="{{lastfm_user.medium_image}}" width="64">
     </a>
     <span class="title">
-      Create a Google Music Playlist -
-      {{season.label}} {{year_chart.year}} -
-      {{year_chart.filtered_tracks.length}}
-      <span ng-show="year_chart.filtered_tracks.length === 1">
-        track
-      </span>
-      <span ng-hide="year_chart.filtered_tracks.length === 1">
-        tracks
+      Create a Google Music Playlist
+      <span class="playlist-description">
+        {{season.label}} {{year_chart.year}} -
+        {{year_chart.filtered_tracks.length}}
+        <span ng-show="year_chart.filtered_tracks.length === 1">
+          track
+        </span>
+        <span ng-hide="year_chart.filtered_tracks.length === 1">
+          tracks
+        </span>
       </span>
     </span>
   </h1>
 </div>
 <div ng-hide="year_chart.tracks_loaded">
-  <p>Loading tracks...</p>
+  <p>
+    <i class="fa fa-spinner fa-spin"></i>
+    Loading tracks...
+  </p>
 </div>
-<form ng-submit="authenticate()" ng-if="year_chart.tracks_loaded">
+<form ng-submit="google_authenticate()" ng-if="year_chart.tracks_loaded &amp;&amp; !auth_status.have_token">
   <button type="submit" class="btn btn-google">
     <i class="fa fa-google"></i>
     Sign In With Google

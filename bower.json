@@ -15,7 +15,6 @@
     "angular-moment": "~0.8.0",
     "angular-bootstrap": "~0.11.0",
     "animate-css": "~3.2.0",
-    "angular-oauth": "*",
     "fontawesome": "~4.1.0"
   },
   "devDependencies": {
