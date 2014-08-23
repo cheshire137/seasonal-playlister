@@ -65,6 +65,16 @@ a[ng-click], a[clip-click] {
   }
 }
 
+.btn-rdio {
+  background-color: #008FD5;
+  color: white;
+
+  &:hover, &:focus {
+    color: white;
+    background-color: darken(#008FD5, 5%);
+  }
+}
+
 .footer {
   margin-top: $line-height-computed;
   padding-top: $line-height-computed;

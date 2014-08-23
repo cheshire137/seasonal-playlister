@@ -1,9 +1,36 @@
+GIT
+  remote: https://github.com/nixme/rdio-ruby.git
+  revision: f95ba6285ef0376f14d939832d49b1b75d316a3d
+  specs:
+    rdio-ruby (0.0.1)
+      faraday (~> 0.8)
+      faraday_middleware (~> 0.8.8)
+      simple_oauth (~> 0.1.9)
+
 GEM
   remote: https://rubygems.org/
   specs:
+    faraday (0.8.9)
+      multipart-post (~> 1.2.0)
+    faraday_middleware (0.8.8)
+      faraday (>= 0.7.4, < 0.9)
+    hashie (3.2.0)
+    json (1.8.1)
+    multi_json (1.10.1)
+    multipart-post (1.2.0)
+    oauth (0.4.7)
+    omniauth (1.2.2)
+      hashie (>= 1.2, < 4)
+      rack (~> 1.0)
+    omniauth-oauth (1.0.1)
+      oauth
+      omniauth (~> 1.0)
+    omniauth-rdio (0.1.0)
+      omniauth-oauth (~> 1.0)
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
+    simple_oauth (0.1.9)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -14,5 +41,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  json (~> 1.8.1)
+  multi_json (~> 1.10.1)
+  omniauth-rdio (~> 0.1.0)
   rack (~> 1.5.2)
+  rdio-ruby!
   sinatra (~> 1.4.5)

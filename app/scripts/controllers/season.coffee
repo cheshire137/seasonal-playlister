@@ -8,7 +8,7 @@
  # Controller of the seasonSoundApp
 ###
 angular.module('seasonSoundApp')
-  .controller 'SeasonCtrl', ($scope, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc, GoogleAuthSvc, GooglePlaylistSvc) ->
+  .controller 'SeasonCtrl', ($scope, $location, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc, GoogleAuthSvc, GooglePlaylistSvc) ->
     $scope.lastfm_user = LastfmChartsSvc.user
     $scope.load_status = LastfmChartsSvc.load_status
     $scope.year_charts = LastfmChartsSvc.year_charts
@@ -20,9 +20,13 @@ angular.module('seasonSoundApp')
       name: $routeParams.season
       label: undefined
     $scope.auth_status =
-      have_token: false
-      access_token: $cookieStore.get('access_token')
-      is_verified: false
+      google:
+        have_token: false
+        access_token: $cookieStore.get('google_access_token')
+        is_verified: false
+      rdio:
+        have_token: false
+        user: $cookieStore.get('rdio_user')
     $scope.playlist =
       name: ''
       description: ''
@@ -95,21 +99,31 @@ angular.module('seasonSoundApp')
     $scope.google_authenticate = ->
       GoogleAuthSvc.authenticate()
 
-    $scope.$watch 'auth_status.access_token', ->
-      $scope.auth_status.have_token = $scope.auth_status.access_token &&
-                                      $scope.auth_status.access_token != ''
+    $scope.rdio_authenticate = ->
+      $cookieStore.put('user_return_to', $location.url())
+      $window.location.href = '/auth/rdio'
+
+    $scope.rdio_logout = ->
+      $cookieStore.put('user_return_to', $location.url())
+      $window.location.href = '/logout/rdio'
+
+    $scope.$watch 'auth_status.rdio.user', ->
+      user = $scope.auth_status.rdio.user
+      $scope.auth_status.rdio.have_token = user && user != ''
+
+    $scope.$watch 'auth_status.google.access_token', ->
+      token = $scope.auth_status.google.access_token
+      $scope.auth_status.google.have_token = token && token != ''
       return unless $scope.auth_status.have_token
-      console.log 'access_token', $scope.auth_status.access_token
       on_success = (data) ->
-        $scope.auth_status.is_verified = true
-        $scope.auth_status.have_token = true
+        $scope.auth_status.google.is_verified = true
+        $scope.auth_status.google.have_token = true
       on_error = ->
-        $scope.auth_status.is_verified = false
-        $scope.auth_status.access_token = ''
-        $scope.auth_status.have_token = false
-        $cookieStore.remove('access_token')
-      GoogleAuthSvc.verify($scope.auth_status.access_token).
-                then on_success, on_error
+        $scope.auth_status.google.is_verified = false
+        $scope.auth_status.google.access_token = ''
+        $scope.auth_status.google.have_token = false
+        $cookieStore.remove('google_access_token')
+      GoogleAuthSvc.verify(token).then on_success, on_error
 
     $scope.create_playlist = ->
       console.log 'creating playlist'

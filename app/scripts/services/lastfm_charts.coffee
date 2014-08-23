@@ -110,8 +110,6 @@ angular.module('seasonSoundApp')
             else if data.error
               Notification.error data.message
           $http.get(LastfmSvc.get_weekly_track_chart_url(user, chart)).
-                success(on_success).
-                error (data, status, headers, config) =>
-                  Notification.error data
+                success(on_success).error(@on_error)
 
     new LastfmCharts()

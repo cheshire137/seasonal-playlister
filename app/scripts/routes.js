@@ -10,6 +10,37 @@ angular.module('seasonSoundApp').config(['$routeProvider',
     }).when('/lastfm/:user/:year/:season', {
       templateUrl: '/views/season.html',
       controller: 'SeasonCtrl'
+    }).when('/logged-out/rdio', {
+      resolve: {
+        redirect:
+          function ($location, $cookieStore) {
+            $cookieStore.remove('rdio_user');
+            var user_return_to = $cookieStore.get('user_return_to');
+            if (user_return_to) {
+              $cookieStore.remove('user_return_to');
+              $location.path(user_return_to);
+            } else {
+              $location.path('/');
+            }
+          }
+      }
+    }).when('/rdio/:user', {
+      resolve: {
+        redirect:
+          function ($location, $route, $cookieStore) {
+            var rdio_user = $route.current.params.user;
+            if (rdio_user) {
+              $cookieStore.put('rdio_user', rdio_user);
+            }
+            var user_return_to = $cookieStore.get('user_return_to');
+            if (user_return_to) {
+              $cookieStore.remove('user_return_to');
+              $location.path(user_return_to);
+            } else {
+              $location.path('/');
+            }
+          }
+      }
     }).when('/access_token=:access_token&token_type=:token_type&expires_in=:expires_in', {
       resolve: {
         redirect:

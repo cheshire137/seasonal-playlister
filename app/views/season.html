@@ -96,18 +96,18 @@
     </div>
   </div>
   <div class="col-sm-4 col-md-3 sidebar" ng-show="year_chart.filtered_tracks.length &gt; 0">
-    <h3 class="sidebar-header">Google Music</h3>
-    <ul class="list-unstyled google-music-list">
-      <li>
-        <div ng-if="!auth_status.have_token">
+    <div ng-if="false">
+      <h3 class="sidebar-header">Google Music</h3>
+      <ul class="list-unstyled google-music-list">
+        <li ng-if="!auth_status.google.have_token">
           <form ng-submit="google_authenticate()">
             <button type="submit" class="btn btn-google">
               <i class="fa fa-google"></i>
               Sign In With Google
             </button>
           </form>
-        </div>
-        <div ng-if="auth_status.have_token &amp;&amp; auth_status.is_verified">
+        </li>
+        <li ng-if="auth_status.google.have_token &amp;&amp; auth_status.google.is_verified">
           <form ng-submit="create_playlist()">
             <div class="form-group">
               <label class="control-label" for="playlist_name">Playlist name:</label>
@@ -138,7 +138,24 @@
               </button>
             </div>
           </form>
-        </div>
+        </li>
+      </ul>
+    </div>
+    <h3 class="sidebar-header">Rdio</h3>
+    <ul class="list-unstyled rdio-list">
+      <li ng-if="!auth_status.rdio.have_token">
+        <form ng-submit="rdio_authenticate()">
+          <div class="form-group">
+            <button type="submit" class="btn btn-rdio">
+              <i class="fi-social-rdio"></i>
+              Sign In With Rdio
+            </button>
+          </div>
+        </form>
+      </li>
+      <li ng-if="auth_status.rdio.have_token">
+        Signed in as <strong>{{auth_status.rdio.user}}</strong>.
+        <a ng-click="rdio_logout()">Sign Out</a>
       </li>
     </ul>
     <h3 class="sidebar-header">Options</h3>
