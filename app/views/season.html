@@ -96,12 +96,15 @@
   </div>
   <div class="col-sm-4 sidebar">
     <h3 class="sidebar-header">Options</h3>
-    <ul class="list-unstyled">
-      <li ng-show="year_chart.filtered_tracks.length &gt; 0">
+    <ul class="list-unstyled" ng-show="year_chart.filtered_tracks.length &gt; 0">
+      <li>
         <a ng-click="download_csv()">Download playlist as CSV</a>
       </li>
-      <li ng-show="year_chart.filtered_tracks.length &gt; 0">
+      <li>
         <a ng-click="download_json()">Download playlist as JSON</a>
+      </li>
+      <li>
+        <a ng-href="#/lastfm/{{lastfm_user.user_name}}/{{year_chart.year}}/{{season.name}}/artist/{{track_filters.artist}}/play-count/{{track_filters.min_play_count}}/google-playlist">Create Google Music playlist</a>
       </li>
     </ul>
   </div>
