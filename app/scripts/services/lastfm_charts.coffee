@@ -38,9 +38,10 @@ angular.module('seasonSoundApp')
           if year_chart
             year_chart.charts.push week_chart
           else
-            @year_charts.push
+            year_chart = new YearChart
               year: year
-              charts: [week_chart]
+            year_chart.charts.push week_chart
+            @year_charts.push year_chart
 
       get_chart_from_year_charts: (from, to) ->
         for year_chart in @year_charts

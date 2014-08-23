@@ -7,6 +7,56 @@ class LastfmChart
   track_count: ->
     @tracks.length
 
+  is_in_season: (season_start, season_end) ->
+    chart_start = @from_date()
+    chart_start >= season_start && chart_start <= season_end
+
+  # spring: March 21 - June 20
+  is_spring: ->
+    year = @year()
+    season_start = new Date(year, 2, 21)
+    season_end = new Date(year, 5, 20)
+    @is_in_season season_start, season_end
+
+  # summer: June 21 - September 22
+  is_summer: ->
+    year = @year()
+    season_start = new Date(year, 5, 21)
+    season_end = new Date(year, 8, 22)
+    @is_in_season season_start, season_end
+
+  # fall: September 23 - December 20
+  is_fall: ->
+    year = @year()
+    season_start = new Date(year, 8, 23)
+    season_end = new Date(year, 11, 20)
+    @is_in_season season_start, season_end
+
+  # winter: December 21 - March 20
+  is_winter: ->
+    year = @year()
+    season_start_month = 11
+    season_start_day = 21
+    season_end_month = 2
+    season_end_day = 20
+    season_start = new Date(year - 1, season_start_month, season_start_day)
+    season_end = new Date(year, season_end_month, season_end_day)
+    return true if @is_in_season(season_start, season_end)
+    season_start = new Date(year, season_start_month, season_start_day)
+    season_end = new Date(year + 1, season_end_month, season_end_day)
+    @is_in_season season_start, season_end
+
+  # spring: March 21 - June 20
+  # summer: June 21 - September 22
+  # fall: September 23 - December 20
+  # winter: December 21 - March 20
+  season: ->
+    return 'spring' if @is_spring()
+    return 'summer' if @is_summer()
+    return 'fall' if @is_fall()
+    return 'winter' if @is_winter()
+    'unknown'
+
   from_date: ->
     new Date(1000 * @from)
 
