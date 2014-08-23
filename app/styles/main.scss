@@ -3,11 +3,65 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "bootstrap-sass-official/assets/stylesheets/bootstrap.scss";
 // endbower
 
+a {
+  -webkit-transition: color 0.25s ease-in-out;
+  -moz-transition: color 0.25s ease-in-out;
+  -ms-transition: color 0.25s ease-in-out;
+  -o-transition: color 0.25s ease-in-out;
+  transition: color 0.25s ease-in-out;
+}
+
+a[ng-click], a[clip-click] {
+  cursor: pointer;
+}
+
+.alert {
+  &.ng-hide-remove {
+    -webkit-animation: fadeInDown 0.25s;
+    animation: fadeInDown 0.25s;
+  }
+
+  &.ng-hide-add {
+    -webkit-animation: fadeOutUp 0.25s;
+    animation: fadeOutUp 0.25s;
+    display: block !important;
+  }
+}
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
   color: #000;
   padding: 0.2em 0;
+}
+
+.footer {
+  margin-top: $line-height-computed;
+  padding-top: $line-height-computed;
+  color: #777;
+  border-top: 1px solid $hr-border;
+  font-size: $font-size-small;
+
+  a {
+    &, &:active, &:visited {
+      color: $gray;
+      text-decoration: underline;
+    }
+
+    &:hover, &:focus {
+      text-decoration: none;
+    }
+  }
+}
+
+form {
+  &.form-inline {
+    .form-group {
+      & + .form-group {
+        margin-left: 20px;
+      }
+    }
+  }
 }
 
 h1 {
@@ -28,11 +82,23 @@ h1 {
     display: inline-block;
   }
 
+  .lastfm-user-since {
+    display: block;
+    font-size: $font-size-base;
+    color: $gray-light;
+    font-weight: normal;
+    margin-top: ($line-height-computed / 2);
+  }
+
   .title {
     margin-left: 10px;
     vertical-align: middle;
     display: inline-block;
   }
+}
+
+.nowrap {
+  white-space: nowrap;
 }
 
 .site-header {
@@ -41,106 +107,77 @@ h1 {
   }
 }
 
-.track {
-  width: 23%;
-  margin: 0 1.8% 10px 0;
-  padding: 10px;
-  box-sizing: border-box;
-  text-align: center;
-  display: inline-block;
-  overflow: hidden;
-  border-radius: 10px;
-  -webkit-transition: background 0.5s ease-in-out;
-  -moz-transition: background 0.5s ease-in-out;
-  -ms-transition: background 0.5s ease-in-out;
-  -o-transition: background 0.5s ease-in-out;
-  transition: background 0.5s ease-in-out;
+.track-row {
+  &.animate.ng-enter {
+    -webkit-animation: fadeIn 0.25s;
+    animation: fadeIn 0.25s;
+  }
 
-  &:hover, &:focus {
-    text-decoration: none;
-    background-color: #e5e3e9;
+  &.animate.ng-leave {
+    -webkit-animation: fadeOut 0.25s;
+    animation: fadeOut 0.25s;
   }
 
   &.missing {
     background-color: #f2dede;
     color: #b94a48 !important;
-
-    &:hover, &:focus {
-      background-color: #e8baba;
-    }
-
-    .track-artist-divider, .play-count {
-      color: #cf6d6b;
-    }
   }
 
   &.matching {
     background-color: #d9edf7;
     color: #3a87ad !important;
-
-    &:hover, &:focus {
-      background-color: #a5d2e8;
-    }
-
-    .track-artist-divider, .play-count {
-      color: #62aacc;
-    }
   }
 
   &.matched {
     background-color: #0091d4;
     color: white !important;
-
-    &:hover, &:focus {
-      background-color: #007fb5;
-    }
-
-    .track-artist-divider, .play-count {
-      color: #efefef;
-    }
   }
 
   img {
-    height: 73px;
+    width: 73px;
     margin-left: auto;
     margin-right: auto;
     display: block;
     border-radius: 10px;
   }
+}
 
-  .play-count {
-    font-size: 12px;
-    color: #999;
-    font-style: italic;
+#track_filters_min_play_count {
+  width: 6em;
+}
 
-    &:before {
-      content: '(';
-    }
+.year-row {
+  text-align: center;
 
-    &:after {
-      content: ')';
-    }
-  }
-
-  .track-artist-divider {
-    font-style: italic;
-    color: #999;
-  }
-
-  .artist-name, .track-name {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .artist-name {
-    max-width: 70%;
+  a {
+    font-weight: $headings-font-weight;
     display: inline-block;
-    vertical-align: middle;
+
+    & + a {
+      margin-left: 10px;
+    }
   }
 
-  .track-name {
-    max-width: 100%;
+  .season-icon {
     display: block;
+    height: 24px;
+    position: relative;
+    margin: 5px auto;
+  }
+
+  .spring-link {
+    color: #f291c0;
+  }
+
+  .summer-link {
+    color: #97d86b;
+  }
+
+  .fall-link {
+    color: #f79c6f;
+  }
+
+  .winter-link {
+    color: #6fcaf7;
   }
 }

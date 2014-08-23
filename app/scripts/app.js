@@ -8,5 +8,11 @@
  *
  * Main module of the application.
  */
-angular.module('seasonSoundApp', ['ui.bootstrap', 'ngAnimate', 'ngRoute',
-                                  'ngCookies']);
+angular.module('seasonSoundApp', [
+  'ngCookies',
+  'ngResource',
+  'ngSanitize',
+  'ngAnimate',
+  'ngRoute',
+  'ui.bootstrap'
+]);

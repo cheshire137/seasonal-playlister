@@ -6,13 +6,17 @@ class YearChart
     @tracks = []
     @filtered_tracks = []
 
+  has_track: (track) ->
+    @tracks.filter((t) -> t.id == track.id).length > 0
+
   filter_tracks: (filters) ->
-    predicate = (track) ->
+    @filtered_tracks.length = 0
+    for track in @tracks
       result = true
       if filters.min_play_count
         result = result && track.play_count >= filters.min_play_count
-      result
-    @filtered_tracks = @tracks.filter(predicate)
+      if result
+        @filtered_tracks.push track
 
   spring_charts: ->
     @charts.filter((chart) -> chart.is_spring())

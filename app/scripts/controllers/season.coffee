@@ -37,7 +37,8 @@ angular.module('seasonSoundApp')
 
     on_week_chart_loaded = (week_chart, is_last) ->
       for track in week_chart.tracks
-        $scope.year_chart.tracks.push track
+        unless $scope.year_chart.has_track(track)
+          $scope.year_chart.tracks.push track
       if is_last
         $scope.year_chart.tracks_loaded = true
 
@@ -58,4 +59,4 @@ angular.module('seasonSoundApp')
       $scope.year_chart.filter_tracks $scope.track_filters
 
     $scope.$watch 'year_chart.tracks_loaded', filter_tracks
-    $scope.$watch 'track_filters', filter_tracks
+    $scope.$watch 'track_filters.min_play_count', filter_tracks

@@ -42,17 +42,43 @@
   </p>
 </div>
 <div class="lastfm-tracks" ng-if="year_chart.tracks.length &gt; 0">
-  <a class="track" ng-href="{{track.url}}" ng-id="{{track.mbid}}" ng-class="{matching: track.matching, matched: track.matched, missing: track.missing}" ng-repeat="track in year_chart.filtered_tracks" target="_blank">
-    <img ng-src="{{track.large_image}}">
-    <div class="track-info">
-      <span class="track-name" tooltip-placement="bottom" tooltip="{{track.name}}">
-        {{track.name}}
-      </span>
-      <span class="track-artist-divider">by</span>
-      <span class="artist-name" tooltip-placement="bottom" tooltip="{{track.artist}}">
-        {{track.artist}}
-      </span>
-      <span class="play-count">{{track.play_count}}x</span>
-    </div>
-  </a>
+  <table class="table table-striped tracks-table">
+    <thead>
+      <tr>
+        <th class="track-image-column"></th>
+        <th class="track-name-column">Track</th>
+        <th class="track-artist-column">Artist</th>
+        <th class="nowrap track-play-count-column">Play Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="track-row" ng-id="{{track.id}}" ng-class="{matching: track.matching, matched: track.matched, missing: track.missing}" ng-repeat="track in year_chart.filtered_tracks">
+        <td class="track-image-column">
+          <a class="track" ng-show="track.url" ng-href="{{track.url}}" target="_blank">
+            <img ng-src="{{track.large_image}}" class="track-image">
+          </a>
+          <img ng-hide="track.url" ng-src="{{track.large_image}}" class="track-image">
+        </td>
+        <td class="track-name-column">
+          <a class="track" ng-show="track.url" ng-href="{{track.url}}" target="_blank">
+            {{track.name}}
+          </a>
+          <span ng-hide="track.url">
+            {{track.name}}
+          </span>
+        </td>
+        <td class="track-artist-column">
+          <a class="artist-link" ng-show="track.artist_url" ng-href="{{track.artist_url}}" target="_blank">
+            {{track.artist}}
+          </a>
+          <span ng-hide="track.artist_url">
+            {{track.artist}}
+          </span>
+        </td>
+        <td class="track-play-count-column">
+          {{track.play_count}}x
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

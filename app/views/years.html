@@ -1,52 +1,40 @@
-<div class="page-header clearfix">
-  <h1 class="back-link-container">
+<div class="page-header">
+  <h1>
     <a class="back-link" href="#/" ng-click="wipe_notifications()" tooltip-placement="right" tooltip="Choose a different Last.fm user">
       <span class="glyphicon glyphicon-chevron-left"></span>
     </a>
+    <a class="lastfm-user-link" href="{{lastfm_user.url}}" tooltip="{{lastfm_user.user_name}}">
+      <img class="lastfm-user-image img-circle" height="64" ng-src="{{lastfm_user.medium_image}}" width="64">
+    </a>
+    <span class="title">
+      <span class="nowrap">
+        Listening History for
+      </span>
+      <span class="lastfm-user">
+        <span ng-show="lastfm_user.real_name">
+          {{lastfm_user.real_name}}
+        </span>
+        <span ng-hide="lastfm_user.real_name">
+          {{lastfm_user.user_name}}
+        </span>
+      </span>
+      <span class="nowrap lastfm-user-since" ng-show="lastfm_user.id">
+        Last.fm user since
+        {{lastfm_user.date_registered_str()}}
+      </span>
+    </span>
   </h1>
-  <div class="pull-left">
-    <div class="row">
-      <div class="col-md-8 clearfix">
-        <div class="pull-left" ng-if="lastfm_user.id">
-          <a class="lastfm-user-link" href="{{lastfm_user.url}}" tooltip="{{lastfm_user.user_name}}">
-            <img class="lastfm-user-image img-circle" height="64" ng-src="{{lastfm_user.medium_image}}" width="64">
-          </a>
-        </div>
-        <div class="pull-left">
-          <h1>
-            <span class="nowrap">
-              Listening History for
-            </span>
-            <span class="lastfm-user">
-              <span ng-show="lastfm_user.real_name">
-                {{lastfm_user.real_name}}
-              </span>
-              <span ng-hide="lastfm_user.real_name">
-                {{lastfm_user.user_name}}
-              </span>
-            </span>
-          </h1>
-          <p class="nowrap lastfm-user-since" ng-show="lastfm_user.id">
-            Last.fm user since
-            {{lastfm_user.date_registered_str()}}
-          </p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="neighbors" ng-if="lastfm_neighbors.length &gt; 0">
-          <h2 class="subtitle">
-            Similar Last.fm users:
-          </h2>
-          <p>
-            <span ng-repeat="neighbor in lastfm_neighbors">
-              <a href="#/lastfm/{{neighbor.user_name}}">
-                {{neighbor.user_name}}
-              </a>
-            </span>
-          </p>
-        </div>
-      </div>
-    </div>
+  <div class="neighbors" ng-if="lastfm_neighbors.length &gt; 0">
+    <ul class="list-inline">
+      <li>
+        <label class="control-label">Similar Last.fm users:</label>
+      </li>
+      <li class="neighbor" ng-repeat="neighbor in lastfm_neighbors">
+        <a ng-href="#/lastfm/{{neighbor.user_name}}" class="neighbor-link">
+          {{neighbor.user_name}}
+        </a>
+      </li>
+    </ul>
   </div>
 </div>
 <div ng-hide="load_status.charts">
@@ -64,13 +52,26 @@
     </a>
   </p>
 </div>
-<div class="chart-weeks">
-  <div class="year-{{year_chart.year}}" ng-repeat="year_chart in year_charts">
-    <h3>{{year_chart.year}}</h3>
-    <p><a ng-href="#/lastfm/{{lastfm_user.user_name}}/{{year_chart.year}}/spring">Spring - (March 21 - June 20)</a></p>
-    <p><a ng-href="#/lastfm/{{lastfm_user.user_name}}/{{year_chart.year}}/summer">Summer (June 21 - September 22)</a></p>
-    <p><a ng-href="#/lastfm/{{lastfm_user.user_name}}/{{year_chart.year}}/fall">Fall (September 23 - December 20)</a></p>
-    <p><a ng-href="#/lastfm/{{lastfm_user.user_name}}/{{year_chart.year}}/winter">Winter (December 21 - March 20)</a></p>
-    <hr>
+<div class="row year-row" ng-repeat="i in slice_range(year_charts, 3)">
+  <div class="col-sm-4 year-column" ng-repeat="year_chart in year_charts.slice(i, i+3)">
+    <div class="year-{{year_chart.year}}">
+      <h3>{{year_chart.year}}</h3>
+      <a class="spring-link" ng-href="#/lastfm/{{lastfm_user.user_name}}/{{year_chart.year}}/spring">
+        Spring
+        <img src="images/spring.png" alt="Spring" class="season-icon">
+      </a>
+      <a class="summer-link" ng-href="#/lastfm/{{lastfm_user.user_name}}/{{year_chart.year}}/summer">
+        Summer
+        <img src="images/summer.png" alt="Summer" class="season-icon">
+      </a>
+      <a class="fall-link" ng-href="#/lastfm/{{lastfm_user.user_name}}/{{year_chart.year}}/fall">
+        Fall
+        <img src="images/fall.png" alt="Fall" class="season-icon">
+      </a>
+      <a class="winter-link" ng-href="#/lastfm/{{lastfm_user.user_name}}/{{year_chart.year}}/winter">
+        Winter
+        <img src="images/winter.png" alt="Winter" class="season-icon">
+      </a>
+    </div>
   </div>
 </div>
