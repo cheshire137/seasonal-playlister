@@ -13,6 +13,7 @@ angular.module('seasonSoundApp')
     $scope.load_status = LastfmChartsSvc.load_status
     $scope.year_charts = LastfmChartsSvc.year_charts
     $scope.year_chart = LastfmChartsSvc.chart
+    $scope.track_filters = {min_play_count: 3}
     $scope.season =
       name: $routeParams.season
       label: undefined
@@ -50,3 +51,11 @@ angular.module('seasonSoundApp')
       return unless $scope.load_status.charts
       LastfmChartsSvc.load_year_chart $routeParams.year
       $scope.year_chart.each_season $scope.season.name, week_handler
+
+    filter_tracks = ->
+      return unless $scope.year_chart.tracks_loaded
+      return unless $scope.track_filters
+      $scope.year_chart.filter_tracks $scope.track_filters
+
+    $scope.$watch 'year_chart.tracks_loaded', filter_tracks
+    $scope.$watch 'track_filters', filter_tracks

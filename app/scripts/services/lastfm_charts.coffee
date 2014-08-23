@@ -92,7 +92,6 @@ angular.module('seasonSoundApp')
                 @load_status.charts = true
 
       get_weekly_track_chart: (user, chart, callback) ->
-        console.log 'fetching', chart.to_s()
         on_success = (data, status, headers, config) =>
           if data.weeklytrackchart.track
             for track_data in data.weeklytrackchart.track

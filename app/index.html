@@ -21,11 +21,8 @@
 
     <!-- Add your site or application content here -->
     <div class="container">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Home</a></li>
-        </ul>
-        <h3 class="text-muted">SeasonSound</h3>
+      <div class="site-header">
+        <h2 class="site-title">SeasonSound</h2>
       </div>
 
       <div class="notifications" ng-controller="NotificationsCtrl">
@@ -93,11 +90,11 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/angular-moment/angular-moment.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/lib/ui-bootstrap-tpls-0.11.0.min.js"></script>
         <script src="scripts/app.js"></script>
         <script src="scripts/routes.js"></script>
         <script src="scripts/services/config.js"></script>
