@@ -47,7 +47,10 @@
     </a>
   </p>
 </div>
-<div class="lastfm-tracks" ng-if="year_chart.tracks.length &gt; 0">
+<div ng-if="year_chart.filtered_tracks.length &lt; 1 &amp;&amp; year_chart.tracks.length &gt; 0">
+  <p>No tracks match your filters.</p>
+</div>
+<div class="lastfm-tracks" ng-if="year_chart.filtered_tracks.length &gt; 0">
   <table class="table table-striped tracks-table">
     <thead>
       <tr>
