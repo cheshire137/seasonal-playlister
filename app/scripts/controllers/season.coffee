@@ -23,6 +23,9 @@ angular.module('seasonSoundApp')
       have_token: false
       access_token: $cookieStore.get('access_token')
       is_verified: false
+    $scope.playlist =
+      name: ''
+      public: true
 
     $scope.wipe_notifications = ->
       NotificationSvc.wipe_notifications()
@@ -70,7 +73,11 @@ angular.module('seasonSoundApp')
       return unless $scope.track_filters
       $scope.year_chart.filter_tracks $scope.track_filters
 
-    $scope.$watch 'year_chart.tracks_loaded', filter_tracks
+    $scope.$watch 'year_chart.tracks_loaded', ->
+      filter_tracks()
+      $scope.playlist.name = "#{$scope.lastfm_user.user_name} " +
+                             "#{$scope.season.label} #{$scope.year_chart.year}"
+
     $scope.$watch 'track_filters.min_play_count', filter_tracks
     $scope.$watch 'track_filters.artist', filter_tracks
 
@@ -91,6 +98,7 @@ angular.module('seasonSoundApp')
       $scope.auth_status.have_token = $scope.auth_status.access_token &&
                                       $scope.auth_status.access_token != ''
       return unless $scope.auth_status.have_token
+      console.log 'access_token', $scope.auth_status.access_token
       on_success = (data) ->
         $scope.auth_status.is_verified = true
         $scope.auth_status.have_token = true
@@ -101,3 +109,14 @@ angular.module('seasonSoundApp')
         $cookieStore.remove('access_token')
       GoogleSvc.verify($scope.auth_status.access_token).
                 then on_success, on_error
+
+    $scope.create_playlist = ->
+      data =
+        create:
+          creationTimestamp: '-1'
+          deleted: false
+          lastModifiedTimestamp: '0'
+          name: $scope.playlist.name
+          type: 'USER_GENERATED'
+          accessControlled: !$scope.playlist.public
+      console.log data

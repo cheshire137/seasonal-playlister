@@ -10,9 +10,6 @@ angular.module('seasonSoundApp').config(['$routeProvider',
     }).when('/lastfm/:user/:year/:season', {
       templateUrl: '/views/season.html',
       controller: 'SeasonCtrl'
-    }).when('/lastfm/:user/:year/:season/artist/:artist/play-count/:min_play_count/google-playlist', {
-      templateUrl: '/views/google_playlist.html',
-      controller: 'SeasonCtrl'
     }).when('/access_token=:access_token&token_type=:token_type&expires_in=:expires_in', {
       resolve: {
         redirect:

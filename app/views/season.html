@@ -49,7 +49,7 @@
   </p>
 </div>
 <div class="row">
-  <div class="col-sm-8">
+  <div class="col-sm-8 col-md-9">
     <div ng-if="year_chart.filtered_tracks.length &lt; 1 &amp;&amp; year_chart.tracks.length &gt; 0">
       <p>No tracks match your filters.</p>
     </div>
@@ -95,17 +95,55 @@
       </table>
     </div>
   </div>
-  <div class="col-sm-4 sidebar" ng-show="year_chart.filtered_tracks.length &gt; 0">
+  <div class="col-sm-4 col-md-3 sidebar" ng-show="year_chart.filtered_tracks.length &gt; 0">
+    <h3 class="sidebar-header">Google Music</h3>
+    <ul class="list-unstyled google-music-list">
+      <li>
+        <div ng-if="!auth_status.have_token">
+          <form ng-submit="google_authenticate()">
+            <button type="submit" class="btn btn-google">
+              <i class="fa fa-google"></i>
+              Sign In With Google
+            </button>
+          </form>
+        </div>
+        <div ng-if="auth_status.have_token &amp;&amp; auth_status.is_verified">
+          <form ng-submit="create_playlist()">
+            <div class="form-group">
+              <label class="control-label" for="playlist_name">Playlist name:</label>
+              <input type="text" class="form-control" id="playlist_name" ng-model="playlist.name">
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-google-music">
+                <i class="fa fa-headphones"></i>
+                Create Playlist
+              </button>
+            </div>
+          </form>
+        </div>
+      </li>
+    </ul>
     <h3 class="sidebar-header">Options</h3>
-    <ul class="list-unstyled">
+    <ul class="list-unstyled options-list">
       <li>
-        <a ng-click="download_csv()">Download playlist as CSV</a>
+        <form ng-submit="download_csv()">
+          <div class="form-group">
+            <button type="submit" class="btn btn-default">
+              <i class="fa fa-download"></i>
+              Download as CSV
+            </button>
+          </div>
+        </form>
       </li>
       <li>
-        <a ng-click="download_json()">Download playlist as JSON</a>
-      </li>
-      <li>
-        <a ng-href="#/lastfm/{{lastfm_user.user_name}}/{{year_chart.year}}/{{season.name}}/artist/{{track_filters.artist}}/play-count/{{track_filters.min_play_count}}/google-playlist">Create Google Music playlist</a>
+        <form ng-submit="download_json()">
+          <div class="form-group">
+            <button type="submit" class="btn btn-default">
+              <i class="fa fa-download"></i>
+              Download as JSON
+            </button>
+          </div>
+        </form>
       </li>
     </ul>
   </div>
