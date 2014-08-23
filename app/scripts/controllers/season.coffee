@@ -8,7 +8,7 @@
  # Controller of the seasonSoundApp
 ###
 angular.module('seasonSoundApp')
-  .controller 'SeasonCtrl', ($scope, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc, GoogleSvc) ->
+  .controller 'SeasonCtrl', ($scope, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc, GoogleAuthSvc) ->
     $scope.lastfm_user = LastfmChartsSvc.user
     $scope.load_status = LastfmChartsSvc.load_status
     $scope.year_charts = LastfmChartsSvc.year_charts
@@ -92,7 +92,7 @@ angular.module('seasonSoundApp')
       win.focus()
 
     $scope.google_authenticate = ->
-      GoogleSvc.authenticate()
+      GoogleAuthSvc.authenticate()
 
     $scope.$watch 'auth_status.access_token', ->
       $scope.auth_status.have_token = $scope.auth_status.access_token &&
@@ -107,7 +107,7 @@ angular.module('seasonSoundApp')
         $scope.auth_status.access_token = ''
         $scope.auth_status.have_token = false
         $cookieStore.remove('access_token')
-      GoogleSvc.verify($scope.auth_status.access_token).
+      GoogleAuthSvc.verify($scope.auth_status.access_token).
                 then on_success, on_error
 
     $scope.create_playlist = ->

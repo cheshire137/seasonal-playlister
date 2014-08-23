@@ -2,14 +2,14 @@
 
 ###*
  # @ngdoc service
- # @name seasonSoundApp.google
+ # @name seasonSoundApp.GoogleAuthSvc
  # @description
- # # google
+ # # GoogleAuthSvc
  # Service in the seasonSoundApp.
 ###
 angular.module('seasonSoundApp')
-  .service 'GoogleSvc', ($q, $cookieStore, $location, $window) ->
-    class Google
+  .service 'GoogleAuthSvc', ($q, $cookieStore, $location, $window) ->
+    class GoogleAuth
       constructor: ->
         @auth_endpoint = 'https://accounts.google.com/o/oauth2/auth'
         @client_id = '1098051467131-qo7g0vgkeie0a7tpldmgh78mq71v9ooj.apps.googleusercontent.com'
@@ -58,4 +58,4 @@ angular.module('seasonSoundApp')
           deferred.promise
         ])
 
-    new Google()
+    new GoogleAuth()
