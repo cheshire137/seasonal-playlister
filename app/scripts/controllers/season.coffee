@@ -26,7 +26,7 @@ angular.module('seasonSoundApp')
     $scope.playlist =
       name: ''
       description: ''
-      public: true
+      is_public: true
 
     $scope.wipe_notifications = ->
       NotificationSvc.wipe_notifications()
@@ -117,5 +117,6 @@ angular.module('seasonSoundApp')
         console.log 'created playlist', data
       on_error = (data) ->
         console.error 'failed to create playlist', data
-      GooglePlaylistSvc.create($scope.playlist).
-                        then on_success, on_error
+      GooglePlaylistSvc.create($scope.playlist,
+                               $scope.auth_status.access_token).
+                        then(on_success, on_error)

@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'logger'
 require 'json'
+require_relative 'backend/google_playlist'
 
 before do
   logger.level = Logger::DEBUG
@@ -35,5 +36,11 @@ end
 
 post '/playlist' do
   content_type :json
-  {hello: 'world'}.to_json
+  playlist = GooglePlaylist.new(params)
+  response = playlist.set_cookie
+  if response.is_a?(Net::HTTPSuccess)
+    response = playlist.create
+  end
+  status response.code
+  response.body.to_json
 end

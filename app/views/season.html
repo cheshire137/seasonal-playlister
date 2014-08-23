@@ -118,6 +118,20 @@
               <textarea class="form-control" id="playlist_description" ng-model="playlist.description"></textarea>
             </div>
             <div class="form-group">
+              <div class="radio">
+                <label>
+                  <input type="radio" ng-model="playlist.is_public" ng-value="true">
+                  Public
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" ng-model="playlist.is_public" ng-value="false">
+                  Private
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
               <button type="submit" class="btn btn-google-music">
                 <i class="fa fa-headphones"></i>
                 Create Playlist

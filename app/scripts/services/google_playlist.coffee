@@ -11,13 +11,8 @@ angular.module('seasonSoundApp')
   .service 'GooglePlaylistSvc', ($q, $http) ->
     class GooglePlaylist
       constructor: ->
-        @headers =
-          'User-agent': 'Music Manager (1, 0, 55, 7425 HTTPS - Windows)'
-        @url = 'https://play.google.com/music/services/createplaylist'
-        @params =
-          format: 'jsarray'
 
-      create: (playlist) ->
+      create: (playlist, access_token) ->
         console.log 'creating playlist', playlist
         deferred = $q.defer()
         on_success = (data) ->
@@ -31,15 +26,12 @@ angular.module('seasonSoundApp')
             config: config
         $http({
           method: 'POST',
-          url: @url,
+          url: '/playlist',
           params:
-            create:
-              creationTimestamp: '-1'
-              deleted: false
-              lastModifiedTimestamp: '0'
-              name: playlist.name
-              type: 'USER_GENERATED'
-              accessControlled: !playlist.is_public
+            name: playlist.name
+            description: playlist.description
+            is_public: playlist.is_public
+            access_token: access_token
         }).success(on_success).error(on_error)
 
     new GooglePlaylist()

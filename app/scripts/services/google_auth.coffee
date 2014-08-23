@@ -12,8 +12,8 @@ angular.module('seasonSoundApp')
     class GoogleAuth
       constructor: ->
         @auth_endpoint = 'https://accounts.google.com/o/oauth2/auth'
-        @client_id = '1098051467131-qo7g0vgkeie0a7tpldmgh78mq71v9ooj.apps.googleusercontent.com'
-        @redirect_uri = 'http://localhost:9000'
+        @client_id = '1098051467131-5nfhjfn7maf7tc54abh3uk7c27m1g9e1.apps.googleusercontent.com'
+        @redirect_uri = 'http://localhost:9292'
         @scopes = ['https://www.googleapis.com/auth/musicmanager']
 
       authenticate: ->
