@@ -33,6 +33,13 @@ module.exports = function (grunt) {
         files: ['bower.json'],
         tasks: ['wiredep']
       },
+      js: {
+        files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
+        tasks: ['newer:jshint:all'],
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        }
+      },
       coffee: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.{coffee,litcoffee,coffee.md}'],
         tasks: ['newer:coffee:dist']
@@ -117,6 +124,7 @@ module.exports = function (grunt) {
       all: {
         src: [
           'Gruntfile.js',
+          '<%= yeoman.app %>/scripts/{,*/}*.js',
           '!<%= yeoman.app %>/scripts/lib/{,*/}*.js'
         ]
       }

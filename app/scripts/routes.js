@@ -2,10 +2,10 @@
 angular.module('seasonSoundApp').config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', {
     templateUrl: '/views/lastfm_user.html',
-    controller: 'PlaylistCtrl'
+    controller: 'LastfmUserChooserCtrl'
   }).when('/lastfm/:user', {
     templateUrl: '/views/lastfm_season.html',
-    controller: 'PlaylistCtrl'
+    controller: 'LastfmUserChooserCtrl'
   }).otherwise({
     redirectTo: '/'
   });

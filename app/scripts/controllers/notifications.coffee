@@ -8,9 +8,9 @@
  # Controller of the seasonSoundApp
 ###
 angular.module('seasonSoundApp')
-  .controller 'NotificationsCtrl', ($scope) ->
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate'
-      'AngularJS'
-      'Karma'
-    ]
+  .controller 'NotificationsCtrl', ($scope, NotificationSvc) ->
+    $scope.notices = NotificationSvc.notices
+    $scope.errors = NotificationSvc.errors
+
+    $scope.remove = (notification_type, notification_id) ->
+      NotificationSvc.remove notification_type, notification_id
