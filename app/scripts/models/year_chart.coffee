@@ -6,6 +6,16 @@ class YearChart
     @tracks = []
     @filtered_tracks = []
 
+  artists: ->
+    hash = {}
+    hash[track.artist] = track.artist for track in @tracks
+    case_insensitive_sort = (a, b) ->
+      return -1 if a.toLowerCase() < b.toLowerCase()
+      return 1 if a.toLowerCase() > b.toLowerCase()
+      0
+    artists = (key for key, value of hash).sort(case_insensitive_sort)
+    ['all'].concat(artists)
+
   has_track: (track) ->
     @tracks.filter((t) -> t.id == track.id).length > 0
 
@@ -15,6 +25,8 @@ class YearChart
       result = true
       if filters.min_play_count
         result = result && track.play_count >= filters.min_play_count
+      if filters.artist && filters.artist != 'all'
+        result = result && track.artist == filters.artist
       if result
         @filtered_tracks.push track
 

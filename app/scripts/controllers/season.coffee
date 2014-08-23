@@ -13,7 +13,9 @@ angular.module('seasonSoundApp')
     $scope.load_status = LastfmChartsSvc.load_status
     $scope.year_charts = LastfmChartsSvc.year_charts
     $scope.year_chart = LastfmChartsSvc.chart
-    $scope.track_filters = {min_play_count: 3}
+    $scope.track_filters =
+      min_play_count: 3
+      artist: 'all'
     $scope.season =
       name: $routeParams.season
       label: undefined
@@ -60,3 +62,4 @@ angular.module('seasonSoundApp')
 
     $scope.$watch 'year_chart.tracks_loaded', filter_tracks
     $scope.$watch 'track_filters.min_play_count', filter_tracks
+    $scope.$watch 'track_filters.artist', filter_tracks
