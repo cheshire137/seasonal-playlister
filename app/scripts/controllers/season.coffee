@@ -8,7 +8,7 @@
  # Controller of the seasonSoundApp
 ###
 angular.module('seasonSoundApp')
-  .controller 'SeasonCtrl', ($scope, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc, GoogleAuthSvc) ->
+  .controller 'SeasonCtrl', ($scope, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc, GoogleAuthSvc, GooglePlaylistSvc) ->
     $scope.lastfm_user = LastfmChartsSvc.user
     $scope.load_status = LastfmChartsSvc.load_status
     $scope.year_charts = LastfmChartsSvc.year_charts
@@ -25,6 +25,7 @@ angular.module('seasonSoundApp')
       is_verified: false
     $scope.playlist =
       name: ''
+      description: ''
       public: true
 
     $scope.wipe_notifications = ->
@@ -111,12 +112,10 @@ angular.module('seasonSoundApp')
                 then on_success, on_error
 
     $scope.create_playlist = ->
-      data =
-        create:
-          creationTimestamp: '-1'
-          deleted: false
-          lastModifiedTimestamp: '0'
-          name: $scope.playlist.name
-          type: 'USER_GENERATED'
-          accessControlled: !$scope.playlist.public
-      console.log data
+      console.log 'creating playlist'
+      on_success = (data) ->
+        console.log 'created playlist', data
+      on_error = (data) ->
+        console.error 'failed to create playlist', data
+      GooglePlaylistSvc.create($scope.playlist).
+                        then on_success, on_error

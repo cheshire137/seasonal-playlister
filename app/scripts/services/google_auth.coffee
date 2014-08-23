@@ -29,8 +29,7 @@ angular.module('seasonSoundApp')
                             encodeURIComponent(value))
         query_str = query_params.join('&')
         url = @auth_endpoint + '?' + query_str
-        console.log url
-        $window.open url
+        $window.location.href = url
 
       verify: (access_token) ->
         $injector = angular.injector(['ng'])
@@ -45,10 +44,10 @@ angular.module('seasonSoundApp')
                 deferred.reject({name: 'invalid_audience'})
             on_error = (data, status, headers, config) ->
               deferred.reject
-                name: 'error_response',
-                data: data,
-                status: status,
-                headers: headers,
+                name: 'error_response'
+                data: data
+                status: status
+                headers: headers
                 config: config
             $http({
               method: 'GET',
