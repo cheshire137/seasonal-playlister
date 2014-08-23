@@ -8,7 +8,7 @@
  # Service in the seasonSoundApp.
 ###
 angular.module('seasonSoundApp')
-  .service 'LastfmChartsSvc', ($http, NotificationSvc, LastfmSvc) ->
+  .service 'LastfmChartsSvc', ($http, NotificationSvc, LastfmSvc, localStorageService) ->
     class LastfmCharts
       constructor: ->
         @year_charts = []
@@ -94,16 +94,24 @@ angular.module('seasonSoundApp')
                 @load_status.charts = true
 
       get_weekly_track_chart: (user, chart, callback) ->
-        on_success = (data, status, headers, config) =>
-          if data.weeklytrackchart.track
-            for track_data in data.weeklytrackchart.track
-              chart.tracks.push(new LastfmTrack(track_data))
-            callback()
-          else if data.error
-            Notification.error data.message
-        $http.get(LastfmSvc.get_weekly_track_chart_url(user, chart)).
-              success(on_success).
-              error (data, status, headers, config) =>
-                Notification.error data
+        storage_key = "#{user}_#{chart.from}_#{chart.to}"
+        stored_tracks = localStorageService.get(storage_key)
+        if stored_tracks
+          for track in stored_tracks
+            chart.tracks.push(track)
+          callback()
+        else
+          on_success = (data, status, headers, config) =>
+            if data.weeklytrackchart.track
+              for track_data in data.weeklytrackchart.track
+                chart.tracks.push(new LastfmTrack(track_data))
+              localStorageService.set(storage_key, JSON.stringify(chart.tracks))
+              callback()
+            else if data.error
+              Notification.error data.message
+          $http.get(LastfmSvc.get_weekly_track_chart_url(user, chart)).
+                success(on_success).
+                error (data, status, headers, config) =>
+                  Notification.error data
 
     new LastfmCharts()

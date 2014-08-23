@@ -15,7 +15,8 @@
     "angular-moment": "~0.8.0",
     "angular-bootstrap": "~0.11.0",
     "animate-css": "~3.2.0",
-    "fontawesome": "~4.1.0"
+    "fontawesome": "~4.1.0",
+    "angular-local-storage": "~0.0.7"
   },
   "devDependencies": {
     "angular-mocks": "1.2.16",

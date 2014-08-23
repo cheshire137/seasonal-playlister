@@ -14,5 +14,9 @@ angular.module('seasonSoundApp', [
   'ngSanitize',
   'ngAnimate',
   'ngRoute',
-  'ui.bootstrap'
-]);
+  'ui.bootstrap',
+  'LocalStorageModule'
+]).config(['localStorageServiceProvider',
+          function(localStorageServiceProvider) {
+            localStorageServiceProvider.setPrefix('seasonSound');
+          }]);
