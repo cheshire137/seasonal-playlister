@@ -1,11 +1,11 @@
 'use strict';
 angular.module('seasonSoundApp').config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', {
-    templateUrl: '/views/lastfm_user.html',
+    templateUrl: '/views/lastfm_choose_user.html',
     controller: 'LastfmUserChooserCtrl'
   }).when('/lastfm/:user', {
-    templateUrl: '/views/lastfm_season.html',
-    controller: 'LastfmUserChooserCtrl'
+    templateUrl: '/views/lastfm_seasons.html',
+    controller: 'LastfmSeasonsCtrl'
   }).otherwise({
     redirectTo: '/'
   });
