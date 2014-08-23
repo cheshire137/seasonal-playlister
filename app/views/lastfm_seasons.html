@@ -70,31 +70,31 @@
     <h4>Spring - (March 21 - June 20)</h4>
     <ol>
       <li ng-repeat="week_chart in year_chart.spring_charts()">
-        {{week_chart.season()}} - {{week_chart.to_s()}}
+        {{week_chart.to_s()}}
       </li>
     </ol>
     <h4>Summer (June 21 - September 22)</h4>
     <ol>
       <li ng-repeat="week_chart in year_chart.summer_charts()">
-        {{week_chart.season()}} - {{week_chart.to_s()}}
+        {{week_chart.to_s()}}
       </li>
     </ol>
     <h4>Fall (September 23 - December 20)</h4>
     <ol>
       <li ng-repeat="week_chart in year_chart.fall_charts()">
-        {{week_chart.season()}} - {{week_chart.to_s()}}
+        {{week_chart.to_s()}}
       </li>
     </ol>
     <h4>Winter (December 21 - March 20)</h4>
     <ol>
       <li ng-repeat="week_chart in year_chart.winter_charts()">
-        {{week_chart.season()}} - {{week_chart.to_s()}}
+        {{week_chart.to_s()}}
       </li>
     </ol>
     <h4>unknown</h4>
     <ol>
       <li ng-repeat="week_chart in year_chart.misc()">
-        {{week_chart.season()}} - {{week_chart.to_s()}}
+        {{week_chart.from_date()}}
       </li>
     </ol>
     <hr>

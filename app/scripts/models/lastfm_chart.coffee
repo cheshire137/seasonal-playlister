@@ -8,28 +8,30 @@ class LastfmChart
     @tracks.length
 
   is_in_season: (season_start, season_end) ->
-    chart_start = @from_date()
+    chart_start = @from_date().setHours(0, 0, 0, 0)
+    season_start = season_start.setHours(0, 0, 0, 0)
+    season_end = season_end.setHours(0, 0, 0, 0)
     chart_start >= season_start && chart_start <= season_end
 
   # spring: March 21 - June 20
   is_spring: ->
     year = @year()
-    season_start = new Date(year, 2, 21)
-    season_end = new Date(year, 5, 20)
+    season_start = new Date(Date.UTC(year, 2, 21))
+    season_end = new Date(Date.UTC(year, 5, 20))
     @is_in_season season_start, season_end
 
   # summer: June 21 - September 22
   is_summer: ->
     year = @year()
-    season_start = new Date(year, 5, 21)
-    season_end = new Date(year, 8, 22)
+    season_start = new Date(Date.UTC(year, 5, 21))
+    season_end = new Date(Date.UTC(year, 8, 22))
     @is_in_season season_start, season_end
 
   # fall: September 23 - December 20
   is_fall: ->
     year = @year()
-    season_start = new Date(year, 8, 23)
-    season_end = new Date(year, 11, 20)
+    season_start = new Date(Date.UTC(year, 8, 23))
+    season_end = new Date(Date.UTC(year, 11, 20))
     @is_in_season season_start, season_end
 
   # winter: December 21 - March 20
@@ -39,11 +41,11 @@ class LastfmChart
     season_start_day = 21
     season_end_month = 2
     season_end_day = 20
-    season_start = new Date(year - 1, season_start_month, season_start_day)
-    season_end = new Date(year, season_end_month, season_end_day)
+    season_start = new Date(Date.UTC(year - 1, season_start_month, season_start_day))
+    season_end = new Date(Date.UTC(year, season_end_month, season_end_day))
     return true if @is_in_season(season_start, season_end)
-    season_start = new Date(year, season_start_month, season_start_day)
-    season_end = new Date(year + 1, season_end_month, season_end_day)
+    season_start = new Date(Date.UTC(year, season_start_month, season_start_day))
+    season_end = new Date(Date.UTC(year + 1, season_end_month, season_end_day))
     @is_in_season season_start, season_end
 
   # spring: March 21 - June 20
