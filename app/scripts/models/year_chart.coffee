@@ -25,6 +25,13 @@ class YearChart
       callback chart, index, is_last
       index += 1
 
+  each_season: (season, callback) ->
+    switch season
+      when 'spring' then @each_spring(callback)
+      when 'summer' then @each_summer(callback)
+      when 'fall' then @each_fall(callback)
+      when 'winter' then @each_winter(callback)
+
   each_spring: (callback) ->
     @each @spring_charts(), callback
 

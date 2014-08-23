@@ -9,7 +9,7 @@
       <img class="lastfm-user-image img-circle" height="64" ng-src="{{lastfm_user.medium_image}}" width="64">
     </a>
   </div>
-  <h1>Spring {{year_chart.year}}</h1>
+  <h1>{{season.label}} {{year_chart.year}}</h1>
 </div>
 <div ng-hide="year_chart.tracks_loaded">
   <p>
@@ -18,7 +18,7 @@
 </div>
 <div ng-if="year_chart.tracks_loaded &amp;&amp; year_chart.tracks.length &lt; 1">
   <p>
-    There is no listening history for Last.fm user {{lastfm_user.user_name}} in spring {{year_chart.year}}.
+    There is no listening history for Last.fm user {{lastfm_user.user_name}} in {{season.name}} {{year_chart.year}}.
   </p>
   <p>
     <a ng-href="#/lastfm/{{lastfm_user.user_name}}" ng-click="wipe_notifications()">

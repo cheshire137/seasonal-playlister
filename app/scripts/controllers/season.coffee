@@ -2,17 +2,23 @@
 
 ###*
  # @ngdoc function
- # @name seasonSoundApp.controller:SpringCtrl
+ # @name seasonSoundApp.controller:SeasonCtrl
  # @description
- # # SpringCtrl
+ # # SeasonCtrl
  # Controller of the seasonSoundApp
 ###
 angular.module('seasonSoundApp')
-  .controller 'SpringCtrl', ($scope, $routeParams, $cookieStore, LastfmChartsSvc) ->
+  .controller 'SeasonCtrl', ($scope, $routeParams, $cookieStore, LastfmChartsSvc) ->
     $scope.lastfm_user = LastfmChartsSvc.user
     $scope.load_status = LastfmChartsSvc.load_status
     $scope.year_charts = LastfmChartsSvc.year_charts
     $scope.year_chart = LastfmChartsSvc.chart
+    $scope.season =
+      name: $routeParams.season
+      label: undefined
+
+    $scope.season.label = $scope.season.name.charAt(0).toUpperCase() +
+                          $scope.season.name.slice(1)
 
     unless $routeParams.user == $cookieStore.get('lastfm_user')
       $cookieStore.put('lastfm_user', $routeParams.user)
@@ -43,4 +49,4 @@ angular.module('seasonSoundApp')
     $scope.$watch 'load_status.charts', ->
       return unless $scope.load_status.charts
       LastfmChartsSvc.load_year_chart $routeParams.year
-      $scope.year_chart.each_spring week_handler
+      $scope.year_chart.each_season $scope.season.name, week_handler
