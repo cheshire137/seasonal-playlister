@@ -8,7 +8,7 @@
  # Controller of the seasonSoundApp
 ###
 angular.module('seasonSoundApp')
-  .controller 'SeasonCtrl', ['$scope', '$location', '$window', '$routeParams', '$cookieStore', 'NotificationSvc', 'LastfmChartsSvc', 'GoogleAuthSvc', 'GooglePlaylistSvc', 'RdioCatalogSvc', 'RdioPlaylistSvc', 'SpotifyAuthSvc', ($scope, $location, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc, GoogleAuthSvc, GooglePlaylistSvc, RdioCatalogSvc, RdioPlaylistSvc, SpotifyAuthSvc) ->
+  .controller 'SeasonCtrl', ['$scope', '$location', '$window', '$routeParams', '$cookieStore', 'NotificationSvc', 'LastfmChartsSvc', 'GoogleAuthSvc', 'GooglePlaylistSvc', 'RdioCatalogSvc', 'RdioPlaylistSvc', 'SpotifyAuthSvc', 'SpotifyCatalogSvc', ($scope, $location, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc, GoogleAuthSvc, GooglePlaylistSvc, RdioCatalogSvc, RdioPlaylistSvc, SpotifyAuthSvc, SpotifyCatalogSvc) ->
     $scope.lastfm_user = LastfmChartsSvc.user
     $scope.load_status = LastfmChartsSvc.load_status
     $scope.year_charts = LastfmChartsSvc.year_charts
@@ -176,6 +176,7 @@ angular.module('seasonSoundApp')
     $scope.create_google_playlist = ->
       $scope.music_service.google = true
       $scope.music_service.rdio = false
+      $scope.music_service.spotify = false
       $scope.saved_playlist.id = null
       on_success = (data) ->
         NotificationSvc.notice 'Created Google Music playlist!'
@@ -190,6 +191,7 @@ angular.module('seasonSoundApp')
     $scope.create_rdio_playlist = ->
       $scope.music_service.google = false
       $scope.music_service.rdio = true
+      $scope.music_service.spotify = false
       $scope.saved_playlist.id = null
       on_matched = (rdio_tracks) ->
         on_success = (data) ->
@@ -208,4 +210,14 @@ angular.module('seasonSoundApp')
                                          on_matched
 
     $scope.create_spotify_playlist = ->
+      $scope.music_service.google = false
+      $scope.music_service.rdio = false
+      $scope.music_service.spotify = true
+      $scope.saved_playlist.id = null
+      on_matched = (spotify_tracks) ->
+        console.log 'matched', spotify_tracks
+      on_match_error = ->
+        console.error 'failed to match Spotify tracks to Last.fm tracks'
+      SpotifyCatalogSvc.match_lastfm_tracks($scope.year_chart.filtered_tracks).
+                        then(on_matched, on_match_error)
   ]

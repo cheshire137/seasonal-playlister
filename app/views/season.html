@@ -91,33 +91,51 @@
             <td class="track-play-count-column">
               {{track.play_count}}x
             </td>
-            <td class="track-status" ng-class="{google: music_service.google, rdio: music_service.rdio}">
+            <td class="track-status" ng-class="{google: music_service.google, rdio: music_service.rdio, spotify: music_service.spotify}">
               <span ng-show="track.matching" class="matching-track-label">
                 <i class="fa fa-spinner fa-spin"></i>
                 Finding track in
                 <span ng-show="music_service.rdio">
+                  <i class="fi-social-rdio"></i>
                   Rdio...
                 </span>
                 <span ng-show="music_service.google">
+                  <i class="fa fa-headphones"></i>
                   Google Music...
+                </span>
+                <span ng-show="music_service.spotify">
+                  <i class="fi-social-spotify"></i>
+                  Spotify...
                 </span>
               </span>
               <span ng-show="track.matched" class="matched-track-label">
                 Found track in
                 <span ng-show="music_service.rdio">
+                  <i class="fi-social-rdio"></i>
                   Rdio!
                 </span>
                 <span ng-show="music_service.google">
+                  <i class="fa fa-headphones"></i>
                   Google Music!
+                </span>
+                <span ng-show="music_service.spotify">
+                  <i class="fi-social-spotify"></i>
+                  Spotify!
                 </span>
               </span>
               <span ng-show="track.missing" class="missing-track-label">
                 Could not find track in
                 <span ng-show="music_service.rdio">
+                  <i class="fi-social-rdio"></i>
                   Rdio.
                 </span>
                 <span ng-show="music_service.google">
+                  <i class="fa fa-headphones"></i>
                   Google Music.
+                </span>
+                <span ng-show="music_service.spotify">
+                  <i class="fi-social-spotify"></i>
+                  Spotify.
                 </span>
               </span>
             </td>
@@ -128,7 +146,9 @@
   </div>
   <div class="col-sm-4 col-md-3 sidebar" ng-show="year_chart.filtered_tracks.length &gt; 0">
     <div ng-if="false">
-      <h3 class="sidebar-header"><i class="fa fa-headphones"></i> Google Music</h3>
+      <h3 class="sidebar-header">
+        <i class="fa fa-headphones"></i> Google Music
+      </h3>
       <ul class="list-unstyled google-music-list">
         <li ng-if="!auth_status.google.have_token">
           <form ng-submit="google_authenticate()">
@@ -173,7 +193,9 @@
       </ul>
       <hr>
     </div>
-    <h3 class="sidebar-header"><i class="fi-social-spotify"></i> Spotify</h3>
+    <h3 class="sidebar-header">
+      <i class="fi-social-spotify"></i> Spotify
+    </h3>
     <ul class="list-unstyled spotify-list">
       <li ng-if="!auth_status.spotify.have_token">
         <form ng-submit="spotify_authenticate()">
@@ -223,7 +245,9 @@
       </li>
     </ul>
     <hr>
-    <h3 class="sidebar-header"><i class="fi-social-rdio"></i> Rdio</h3>
+    <h3 class="sidebar-header">
+      <i class="fi-social-rdio"></i> Rdio
+    </h3>
     <ul class="list-unstyled rdio-list">
       <li ng-if="!auth_status.rdio.have_token">
         <form ng-submit="rdio_authenticate()">
