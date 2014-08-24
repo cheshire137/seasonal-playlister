@@ -22,12 +22,11 @@ angular.module('seasonSoundApp')
 
       reset_charts: ->
         @load_status.charts = false
+        @load_status.neighbors = false
         for key, value of @user
           delete @user[key]
-        for i in [0...@year_charts.length] by 1
-          @year_charts.splice(idx, 1) for idx, year of @year_charts
-        for i in [0...@neighbors.length] by 1
-          @neighbors.splice(idx, 1) for idx, neighbor of @neighbors
+        @year_charts.length = 0
+        @neighbors.length = 0
 
       initialize_year_charts: (charts) ->
         for week_chart in charts
