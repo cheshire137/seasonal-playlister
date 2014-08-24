@@ -23,8 +23,6 @@ angular.module('seasonSoundApp')
       reset_charts: ->
         @load_status.charts = false
         @load_status.neighbors = false
-        for key, value of @user
-          delete @user[key]
         @year_charts.length = 0
         @neighbors.length = 0
 

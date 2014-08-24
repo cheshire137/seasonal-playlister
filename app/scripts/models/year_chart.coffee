@@ -9,6 +9,13 @@ class YearChart
   max_play_count: ->
     Math.max(@tracks.map((track) -> track.play_count)...)
 
+  get_play_count_range: (max_play_count) ->
+    max_play_count = 1 if max_play_count < 1
+    range = []
+    for i in [1..max_play_count]
+      range.push i
+    range
+
   artists: ->
     hash = {}
     hash[track.artist] = track.artist for track in @tracks

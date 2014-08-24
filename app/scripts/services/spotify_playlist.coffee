@@ -46,18 +46,15 @@ angular.module('seasonSoundApp')
           return overall_deferred.promise
         i = 0
         process_next_chunk = =>
-          console.log 'process_next_chunk', i
           deferred = $q.defer()
           track_subset = tracks.slice(i, i + chunk_size)
           @add_chunk_of_tracks access_token, url, track_subset, deferred
           i += chunk_size
           deferred.promise
         on_chunk_success = ->
-          console.log 'added chunk', i, 'of tracks to playlist'
           if i < num_tracks
             process_next_chunk(i).then(on_chunk_success, on_chunk_error)
           else
-            console.log 'finished adding', num_tracks, 'tracks to playlist!'
             overall_deferred.resolve()
         on_chunk_error = (data, status, headers, config) =>
           console.error 'failed to add chunk', i, data

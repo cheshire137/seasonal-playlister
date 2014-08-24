@@ -14,8 +14,8 @@ angular.module('seasonSoundApp')
     $scope.year_charts = LastfmChartsSvc.year_charts
     $scope.year_chart = LastfmChartsSvc.chart
     $scope.track_filters =
-      min_play_count: $routeParams.min_play_count || 3
-      artist: $routeParams.artist || 'all'
+      min_play_count: 3
+      artist: 'all'
     $scope.music_service =
       rdio: false
       google: false
@@ -41,9 +41,11 @@ angular.module('seasonSoundApp')
       is_public: true
     $scope.saved_playlist =
       id: null
+    $scope.play_count_range = []
 
     $scope.go_back = ->
       NotificationSvc.wipe_notifications()
+      LastfmChartsSvc.reset_charts()
       $scope.saved_playlist.id = null
 
     $scope.season.label = $scope.season.name.charAt(0).toUpperCase() +
@@ -99,6 +101,8 @@ angular.module('seasonSoundApp')
       max_play_count = $scope.year_chart.max_play_count()
       if max_play_count < $scope.track_filters.min_play_count
         $scope.track_filters.min_play_count = max_play_count
+      $scope.play_count_range =
+          $scope.year_chart.get_play_count_range(max_play_count)
       filter_tracks()
       $scope.playlist.name = "#{$scope.lastfm_user.user_name} " +
                              "#{$scope.season.label} #{$scope.year_chart.year}"
