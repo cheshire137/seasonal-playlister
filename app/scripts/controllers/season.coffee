@@ -101,16 +101,22 @@ angular.module('seasonSoundApp')
       else
         $scope.year_chart.each_season $scope.season.name, week_handler
 
+    update_total_pages = ->
+      total = Math.ceil($scope.year_chart.filtered_tracks.length /
+                        $scope.page_info.per_page)
+      total = 1 if total < 1
+      $scope.page_info.total = total
+
     filter_tracks = ->
       return unless $scope.year_chart.tracks_loaded
       return unless $scope.track_filters
       $scope.year_chart.filter_tracks $scope.track_filters
       $scope.saved_playlist.id = null
-      $scope.page_info.total =
-          Math.ceil($scope.year_chart.filtered_tracks.length /
-                    $scope.page_info.per_page)
+      update_total_pages()
       if $scope.page_info.page > $scope.page_info.total
         $scope.page_info.page = 0
+      if $scope.play_count_range.length < 1
+        $scope.play_count_range.push 1
 
     $scope.$watch 'year_chart.tracks_loaded', ->
       return unless $scope.year_chart.tracks_loaded
@@ -126,6 +132,7 @@ angular.module('seasonSoundApp')
 
     $scope.$watch 'track_filters.min_play_count', filter_tracks
     $scope.$watch 'track_filters.artist', filter_tracks
+    $scope.$watch 'year_chart.tracks.length', filter_tracks
 
     $scope.download_csv = ->
       csv = $scope.year_chart.to_csv()

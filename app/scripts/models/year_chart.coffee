@@ -7,6 +7,7 @@ class YearChart
     @filtered_tracks = []
 
   max_play_count: ->
+    return 1 if @tracks.length < 1
     Math.max(@tracks.map((track) -> track.play_count)...)
 
   get_play_count_range: (max_play_count) ->
