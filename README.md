@@ -27,3 +27,14 @@ Make spring, summer, fall, and winter playlists from your listening history on L
 1. `source env.sh`
 1. `rackup` to start the Sinatra server that serves up the AngularJS app as well as handles requests to Rdio.
 1. `grunt serve_assets` to watch for changes to files as you develop and recompile CoffeeScript and SASS as necessary.
+
+## How to Deploy to Heroku
+
+1. [Create a new app on Heroku](https://dashboard.heroku.com/apps).
+1. `git remote add heroku git@heroku.com:yourherokuapp.git`
+1. `heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git`
+1. `heroku config:set NODE_ENV=production`
+1. `heroku config:set RACK_ENV=production`
+1. `heroku config:set RDIO_API_KEY=your_rdio_api_key`
+1. `heroku config:set RDIO_API_SHARED_SECRET=your_rdio_shared_secret`
+1. `heroku config:set SESSION_KEY=your_session_key`
