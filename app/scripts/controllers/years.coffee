@@ -19,6 +19,7 @@ angular.module('seasonSoundApp')
       NotificationSvc.wipe_notifications()
 
     unless $routeParams.user == $cookieStore.get('lastfm_user')
+      LastfmChartsSvc.reset_user()
       $cookieStore.put('lastfm_user', $routeParams.user)
       LastfmChartsSvc.reset_charts()
 

@@ -7,7 +7,7 @@
       <img class="lastfm-user-image img-circle" height="64" ng-src="{{lastfm_user.medium_image}}" width="64">
     </a>
     <span class="title">
-      {{season.label}} {{year_chart.year}}
+      {{season.label}} {{year_chart.year}} Scrobbles
       <span class="page-info" ng-show="year_chart.filtered_tracks.length &gt; 0">
         Page {{page_info.page + 1}} of {{page_info.total}}
       </span>
@@ -63,7 +63,7 @@
         <thead>
           <tr>
             <th class="track-image-column"></th>
-            <th class="track-name-column">Track</th>
+            <th class="track-name-column">Last.fm Track</th>
             <th class="track-artist-column">Artist</th>
             <th class="nowrap track-play-count-column">Play Count</th>
             <th class="track-status"></th>

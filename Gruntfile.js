@@ -49,7 +49,10 @@ module.exports = function (grunt) {
         tasks: ['newer:coffee:test', 'karma']
       },
       compass: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+        files: [
+          '<%= yeoman.app %>/styles/{,*/}*.{scss,sass}',
+          'bower_components/bootstrap-sass-official/assets/stylesheets/{,*/}*.scss'
+        ],
         tasks: ['compass:server', 'autoprefixer']
       },
       gruntfile: {
