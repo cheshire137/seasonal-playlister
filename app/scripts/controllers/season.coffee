@@ -209,6 +209,7 @@ angular.module('seasonSoundApp')
       $scope.music_service.rdio = false
       $scope.music_service.spotify = false
       $scope.saved_playlist.id = null
+      $scope.year_chart.reset_track_flags()
       on_success = (data) ->
         NotificationSvc.notice 'Created Google Music playlist!'
         console.log 'created Google Music playlist', data
@@ -224,6 +225,7 @@ angular.module('seasonSoundApp')
       $scope.music_service.rdio = true
       $scope.music_service.spotify = false
       $scope.saved_playlist.id = null
+      $scope.year_chart.reset_track_flags()
       on_matched = (rdio_tracks) ->
         on_success = (data) ->
           NotificationSvc.notice 'Created Rdio playlist!'
@@ -245,6 +247,7 @@ angular.module('seasonSoundApp')
       $scope.music_service.rdio = false
       $scope.music_service.spotify = true
       $scope.saved_playlist.id = null
+      $scope.year_chart.reset_track_flags()
       on_matched = (spotify_tracks) ->
         on_playlist_create = (spotify_playlist) ->
           $scope.saved_playlist.url = spotify_playlist.external_urls.spotify

@@ -184,6 +184,42 @@
     </div>
   </div>
   <div class="col-sm-4 col-md-3 sidebar" ng-show="year_chart.filtered_tracks.length &gt; 0">
+    <div ng-if="auth_status.rdio.have_token &amp;&amp; saved_playlist.id &amp;&amp; music_service.rdio" class="rdio-playlist">
+      <h3 class="sidebar-header">
+        <i class="fi-social-rdio"></i>
+        Your Rdio Playlist
+      </h3>
+      <p class="clearfix">
+        <a ng-href="{{saved_playlist.url}}" target="_blank" class="rdio-playlist-link">
+          <img ng-src="{{saved_playlist.image_url}}">
+          <span class="playlist-name">{{saved_playlist.name}}</span>
+          <span class="track-count">
+            {{saved_playlist.song_count}}
+            <span ng-show="saved_playlist.song_count === 1">track</span>
+            <span ng-hide="saved_playlist.song_count === 1">tracks</span>
+          </span>
+        </a>
+      </p>
+      <hr>
+    </div>
+    <div ng-if="auth_status.spotify.have_token &amp;&amp; saved_playlist.id &amp;&amp; music_service.spotify" class="spotify-playlist clearfix">
+      <h3 class="sidebar-header">
+        <i class="fi-social-spotify"></i>
+        Your Spotify Playlist
+      </h3>
+      <p>
+        <a ng-href="{{saved_playlist.url}}" target="_blank" class="spotify-playlist-link">
+          <span class="playlist-name">{{saved_playlist.name}}</span>
+          <span class="public-flag" ng-show="saved_playlist.is_public">
+            Public playlist
+          </span>
+          <span class="private-flag" ng-hide="saved_playlist.is_public">
+            Private playlist
+          </span>
+        </a>
+      </p>
+      <hr>
+    </div>
     <div ng-if="false">
       <h3 class="sidebar-header">
         <i class="fa fa-headphones"></i> Google Music
@@ -279,24 +315,6 @@
         </form>
       </li>
     </ul>
-    <div ng-if="auth_status.spotify.have_token &amp;&amp; saved_playlist.id &amp;&amp; music_service.spotify" class="spotify-playlist clearfix">
-      <hr>
-      <h3 class="sidebar-header">
-        <i class="fi-social-spotify"></i>
-        Your Spotify Playlist
-      </h3>
-      <p>
-        <a ng-href="{{saved_playlist.url}}" target="_blank" class="spotify-playlist-link">
-          <span class="playlist-name">{{saved_playlist.name}}</span>
-          <span class="public-flag" ng-show="saved_playlist.is_public">
-            Public playlist
-          </span>
-          <span class="private-flag" ng-hide="saved_playlist.is_public">
-            Private playlist
-          </span>
-        </a>
-      </p>
-    </div>
     <hr>
     <h3 class="sidebar-header">
       <i class="fi-social-rdio"></i> Rdio
@@ -335,24 +353,6 @@
         </form>
       </li>
     </ul>
-    <div ng-if="auth_status.rdio.have_token &amp;&amp; saved_playlist.id &amp;&amp; music_service.rdio" class="rdio-playlist clearfix">
-      <hr>
-      <h3 class="sidebar-header">
-        <i class="fi-social-rdio"></i>
-        Your Rdio Playlist
-      </h3>
-      <p>
-        <a ng-href="{{saved_playlist.url}}" target="_blank" class="rdio-playlist-link">
-          <img ng-src="{{saved_playlist.image_url}}">
-          <span class="playlist-name">{{saved_playlist.name}}</span>
-          <span class="track-count">
-            {{saved_playlist.song_count}}
-            <span ng-show="saved_playlist.song_count === 1">track</span>
-            <span ng-hide="saved_playlist.song_count === 1">tracks</span>
-          </span>
-        </a>
-      </p>
-    </div>
     <hr>
     <h3 class="sidebar-header">Export Playlist</h3>
     <ul class="list-unstyled export-playlist-list">

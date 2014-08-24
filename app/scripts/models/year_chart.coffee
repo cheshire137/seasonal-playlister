@@ -6,6 +6,12 @@ class YearChart
     @tracks = []
     @filtered_tracks = []
 
+  reset_track_flags: ->
+    for track in @tracks
+      track.missing = false
+      track.matched = false
+      track.matching = false
+
   max_play_count: ->
     return 1 if @tracks.length < 1
     Math.max(@tracks.map((track) -> track.play_count)...)
