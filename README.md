@@ -38,3 +38,5 @@ Make spring, summer, fall, and winter playlists from your listening history on L
 1. `heroku config:set RDIO_API_KEY=your_rdio_api_key`
 1. `heroku config:set RDIO_API_SHARED_SECRET=your_rdio_shared_secret`
 1. `heroku config:set SESSION_KEY=your_session_key`
+1. `heroku ps:scale web=1`
+1. `git push heroku master`

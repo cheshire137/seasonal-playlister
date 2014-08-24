@@ -1,1 +1,1 @@
-rack: rackup
+rack: rackup -s puma -p $PORT
