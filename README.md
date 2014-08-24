@@ -14,6 +14,11 @@ Make spring, summer, fall, and winter playlists from your listening history on L
 
 ![Playlist creation](https://raw.githubusercontent.com/moneypenny/seasonal-playlister/master/screenshot3.png)
 
+## To Do
+
+- Add ability to create playlists with Google Music. Maybe wait until there's an official public API. :/
+- Allow signing into Last.fm to access private scrobbles.
+
 ## How to Develop
 
 1. `npm install -g bower`
