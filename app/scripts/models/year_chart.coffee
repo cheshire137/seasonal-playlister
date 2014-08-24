@@ -22,6 +22,9 @@ class YearChart
   filter_tracks: (filters) ->
     @filtered_tracks.length = 0
     for track in @tracks
+      track.matching = false
+      track.missing = false
+      track.matched = false
       result = true
       if filters.min_play_count
         result = result && track.play_count >= filters.min_play_count

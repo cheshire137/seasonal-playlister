@@ -3,13 +3,16 @@ angular.module('seasonSoundApp').config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.when('/', {
       templateUrl: '/views/lastfm_choose_user.html',
-      controller: 'LastfmUserChooserCtrl'
+      controller: 'LastfmUserChooserCtrl',
+      title: 'Choose Last.fm User'
     }).when('/lastfm/:user', {
       templateUrl: '/views/years.html',
-      controller: 'YearsCtrl'
+      controller: 'YearsCtrl',
+      title: 'Choose a Season'
     }).when('/lastfm/:user/:year/:season', {
       templateUrl: '/views/season.html',
-      controller: 'SeasonCtrl'
+      controller: 'SeasonCtrl',
+      title: 'Create a Playlist'
     }).when('/logged-out/rdio', {
       resolve: {
         redirect:
@@ -62,4 +65,12 @@ angular.module('seasonSoundApp').config(['$routeProvider',
       redirectTo: '/'
     });
   }
-]);
+]).run(['$route', '$rootScope', function ($route, $rootScope) {
+  $rootScope.$on('$routeChangeSuccess', function () {
+    if ($route.current.title) {
+      $rootScope.title = $route.current.title;
+    } else {
+      $rootScope.title = '';
+    }
+  });
+}]);

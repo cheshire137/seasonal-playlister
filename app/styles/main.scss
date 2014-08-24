@@ -137,6 +137,16 @@ h1 {
   }
 }
 
+.notifications {
+  .alert {
+    position: fixed;
+    left: 50%;
+    width: 20em;
+    margin-left: -10em;
+    top: 20px;
+  }
+}
+
 .nowrap {
   white-space: nowrap;
 }
@@ -238,6 +248,10 @@ h1 {
 
   .track-play-count-column {
     width: 14%;
+    text-align: center;
+  }
+
+  .track-status {
     text-align: center;
   }
 }
