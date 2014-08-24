@@ -67,9 +67,12 @@ angular.module('seasonSoundApp')
 
     week_handler = (week_chart, index, is_last) ->
       user = $scope.lastfm_user.user_name
-      handler = ->
+      on_success = ->
         on_week_chart_loaded week_chart, is_last
-      LastfmChartsSvc.get_weekly_track_chart user, week_chart, handler
+      on_error = ->
+        $scope.year_chart.tracks_loaded = true
+      LastfmChartsSvc.get_weekly_track_chart(user, week_chart).
+                      then(on_success, on_error)
 
     $scope.$watch 'load_status.charts', ->
       return unless $scope.load_status.charts
@@ -86,6 +89,11 @@ angular.module('seasonSoundApp')
       $scope.saved_playlist.id = null
 
     $scope.$watch 'year_chart.tracks_loaded', ->
+      return unless $scope.year_chart.tracks_loaded
+      return unless $scope.track_filters
+      max_play_count = $scope.year_chart.max_play_count()
+      if max_play_count < $scope.track_filters.min_play_count
+        $scope.track_filters.min_play_count = max_play_count
       filter_tracks()
       $scope.playlist.name = "#{$scope.lastfm_user.user_name} " +
                              "#{$scope.season.label} #{$scope.year_chart.year}"

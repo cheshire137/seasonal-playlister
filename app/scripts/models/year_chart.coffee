@@ -6,6 +6,9 @@ class YearChart
     @tracks = []
     @filtered_tracks = []
 
+  max_play_count: ->
+    Math.max(@tracks.map((track) -> track.play_count)...)
+
   artists: ->
     hash = {}
     hash[track.artist] = track.artist for track in @tracks

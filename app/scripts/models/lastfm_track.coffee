@@ -9,6 +9,7 @@ class LastfmTrack
       @artist = 'no artist'
     @artist_mbid = data.artist.mbid
     @play_count = data.playcount
+    @play_count = parseInt(@play_count, 10) if @play_count
     @url = data.url
     if @url && @url.indexOf('http://') < 0
       @url = 'http://' + @url
