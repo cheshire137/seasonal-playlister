@@ -250,7 +250,7 @@ h1 {
 
 .site-header {
   .site-title {
-    color: $gray;
+    color: $gray-light;
 
     a {
       &, &:link, &:active, &:visited, &:hover, &:focus {
@@ -283,6 +283,11 @@ h1 {
 th {
   font-weight: normal;
   color: #666;
+}
+
+.track-play-count-column {
+  width: 14%;
+  text-align: center;
 }
 
 .track-row {
@@ -351,11 +356,6 @@ th {
     width: 25%;
   }
 
-  .track-play-count-column {
-    width: 14%;
-    text-align: center;
-  }
-
   .track-status {
     text-align: center;
   }
@@ -367,7 +367,7 @@ th {
 
 .year-container {
   text-align: center;
-  float: left;
+  display: inline-block;
   margin: 1em 2.5em;
 
   a {

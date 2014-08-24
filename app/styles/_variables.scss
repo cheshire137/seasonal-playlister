@@ -30,7 +30,7 @@ $brand-danger:          #CC0000 !default;
 //## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-$body-bg:               #060606 !default;
+$body-bg:               #1D1D1D !default;
 //** Global text color on `<body>`.
 $text-color:            $gray-light !default;
 
@@ -134,13 +134,13 @@ $table-condensed-cell-padding:  5px !default;
 //** Default background color used for all tables.
 $table-bg:                      transparent !default;
 //** Background color used for `.table-striped`.
-$table-bg-accent:               lighten($body-bg, 10%) !default;
+$table-bg-accent:               lighten($body-bg, 3%) !default;
 //** Background color used for `.table-hover`.
 $table-bg-hover:                $table-bg-accent !default;
 $table-bg-active:               $table-bg-hover !default;
 
 //** Border color for table and cell borders.
-$table-border-color:            lighten($body-bg, 20%) !default;
+$table-border-color:            lighten($body-bg, 5%) !default;
 
 
 //== Buttons
@@ -149,9 +149,9 @@ $table-border-color:            lighten($body-bg, 20%) !default;
 
 $btn-font-weight:                normal !default;
 
-$btn-default-color:              #fff !default;
-$btn-default-bg:                 lighten($body-bg, 20%) !default;
-$btn-default-border:             darken($body-bg, 10%) !default;
+$btn-default-color:              lighten($text-color, 20%) !default;
+$btn-default-bg:                 lighten($body-bg, 10%) !default;
+$btn-default-border:             lighten($body-bg, 15%) !default;
 
 $btn-primary-color:              #fff !default;
 $btn-primary-bg:                 $brand-primary !default;
@@ -181,21 +181,21 @@ $btn-link-disabled-color:        $gray-light !default;
 //##
 
 //** `<input>` background color
-$input-bg:                       lighten($body-bg, 15%) !default;
+$input-bg:                       lighten($body-bg, 5%) !default;
 //** `<input disabled>` background color
-$input-bg-disabled:              lighten($body-bg, 10%) !default;
+$input-bg-disabled:              lighten($body-bg, 7%) !default;
 
 //** Text color for `<input>`s
-$input-color:                    $text-color !default;
+$input-color:                    lighten($text-color, 15%) !default;
 //** `<input>` border color
-$input-border:                   lighten($body-bg, 20%) !default;
+$input-border:                   lighten($body-bg, 7%) !default;
 //** `<input>` border radius
 $input-border-radius:            $border-radius-base !default;
 //** Border color for inputs on focus
-$input-border-focus:             lighten($body-bg, 25%) !default;
+$input-border-focus:             lighten($body-bg, 12%) !default;
 
 //** Placeholder text color
-$input-color-placeholder:        $gray-light !default;
+$input-color-placeholder:        lighten($text-color, 7%) !default;
 
 //** Default `.form-control` height
 $input-height-base:              ($line-height-computed + ($padding-base-vertical * 2) + 2) !default;
@@ -436,12 +436,12 @@ $nav-pills-active-link-hover-color:         $component-active-color !default;
 //##
 
 $pagination-color:                     $link-color !default;
-$pagination-bg:                        lighten($body-bg, 10%) !default;
-$pagination-border:                    lighten($body-bg, 15%) !default;
+$pagination-bg:                        lighten($body-bg, 5%) !default;
+$pagination-border:                    lighten($body-bg, 7%) !default;
 
-$pagination-hover-color:               darken($link-color, 10%) !default;
-$pagination-hover-bg:                  lighten($body-bg, 15%) !default;
-$pagination-hover-border:              lighten($body-bg, 20%) !default;
+$pagination-hover-color:               $link-color !default;
+$pagination-hover-bg:                  lighten($body-bg, 10%) !default;
+$pagination-hover-border:              lighten($body-bg, 12%) !default;
 
 $pagination-active-color:              #fff !default;
 $pagination-active-bg:                 $brand-primary !default;
@@ -843,9 +843,9 @@ $blockquote-small-color:      $gray-lighter !default;
 //** Blockquote font size
 $blockquote-font-size:        ($font-size-base * 1.25) !default;
 //** Blockquote border color
-$blockquote-border-color:     $gray-darker !default;
+$blockquote-border-color:     lighten($body-bg, 15%) !default;
 //** Page header border color
-$page-header-border-color:    $gray-darker !default;
+$page-header-border-color:    lighten($body-bg, 15%) !default;
 //** Width of horizontal description list titles
 $dl-horizontal-offset:        $component-offset-horizontal !default;
 //** Horizontal line color.
