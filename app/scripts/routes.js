@@ -1,4 +1,13 @@
 'use strict';
+var redirect_user = function(cookie_store, location) {
+  var user_return_to = cookie_store.get('user_return_to');
+  if (user_return_to) {
+    cookie_store.remove('user_return_to');
+    location.path(user_return_to);
+  } else {
+    location.path('/');
+  }
+};
 angular.module('seasonSoundApp').config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.when('/', {
@@ -17,13 +26,7 @@ angular.module('seasonSoundApp').config(['$routeProvider',
       resolve: {
         redirect: ['$location', '$cookieStore', function ($location, $cookieStore) {
           $cookieStore.remove('rdio_user');
-          var user_return_to = $cookieStore.get('user_return_to');
-          if (user_return_to) {
-            $cookieStore.remove('user_return_to');
-            $location.path(user_return_to);
-          } else {
-            $location.path('/');
-          }
+          redirect_user($cookieStore, $location);
         }]
       }
     }).when('/auth/failure/:strategy/:message', {
@@ -35,13 +38,7 @@ angular.module('seasonSoundApp').config(['$routeProvider',
           var message = $route.current.params.message;
           $cookieStore.put('error', 'Failed to authenticate with ' +
                                     strategy_name + ': ' + message);
-          var user_return_to = $cookieStore.get('user_return_to');
-          if (user_return_to) {
-            $cookieStore.remove('user_return_to');
-            $location.path(user_return_to);
-          } else {
-            $location.path('/');
-          }
+          redirect_user($cookieStore, $location);
         }]
       }
     }).when('/rdio/:user', {
@@ -51,13 +48,33 @@ angular.module('seasonSoundApp').config(['$routeProvider',
           if (rdio_user) {
             $cookieStore.put('rdio_user', rdio_user);
           }
-          var user_return_to = $cookieStore.get('user_return_to');
-          if (user_return_to) {
-            $cookieStore.remove('user_return_to');
-            $location.path(user_return_to);
+          redirect_user($cookieStore, $location);
+        }]
+      }
+    }).when('/access_token=:access_token&token_type=:token_type&expires_in=:expires_in&state=:state', {
+      resolve: {
+        redirect: ['$location', '$route', '$cookieStore', function ($location, $route, $cookieStore) {
+          var on_bad_state = function() {
+            console.error('no state came back from Spotify');
+            redirect_user($cookieStore, $location);
+          };
+          var state = $route.current.params.state;
+          if (state) {
+            if (state !== $cookieStore.get('spotify_state')) {
+              on_bad_state();
+              return;
+            }
+            // All good, state matched what we originally sent
+            $cookieStore.remove('spotify_state');
           } else {
-            $location.path('/');
+            on_bad_state();
+            return;
           }
+          var access_token = $route.current.params.access_token;
+          if (access_token) {
+            $cookieStore.put('spotify_access_token', access_token);
+          }
+          redirect_user($cookieStore, $location);
         }]
       }
     }).when('/access_token=:access_token&token_type=:token_type&expires_in=:expires_in', {
@@ -65,15 +82,9 @@ angular.module('seasonSoundApp').config(['$routeProvider',
         redirect: ['$location', '$route', '$cookieStore', function ($location, $route, $cookieStore) {
           var access_token = $route.current.params.access_token;
           if (access_token) {
-            $cookieStore.put('access_token', access_token);
+            $cookieStore.put('google_access_token', access_token);
           }
-          var user_return_to = $cookieStore.get('user_return_to');
-          if (user_return_to) {
-            $cookieStore.remove('user_return_to');
-            $location.path(user_return_to);
-          } else {
-            $location.path('/');
-          }
+          redirect_user($cookieStore, $location);
         }]
       }
     }).otherwise({

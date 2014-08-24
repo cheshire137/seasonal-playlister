@@ -8,16 +8,15 @@
  # Service in the seasonSoundApp.
 ###
 angular.module('seasonSoundApp')
-  .service 'GoogleAuthSvc', ($q, $cookieStore, $location, $window) ->
+  .service 'GoogleAuthSvc', ['$q', '$location', '$window', ($q, $location, $window) ->
     class GoogleAuth
       constructor: ->
         @auth_endpoint = 'https://accounts.google.com/o/oauth2/auth'
         @client_id = '1098051467131-5nfhjfn7maf7tc54abh3uk7c27m1g9e1.apps.googleusercontent.com'
-        @redirect_uri = 'http://localhost:9292'
+        @redirect_uri = $window.location.origin
         @scopes = ['https://www.googleapis.com/auth/musicmanager']
 
       authenticate: ->
-        $cookieStore.put('user_return_to', $location.url())
         params =
           response_type: 'token'
           client_id: @client_id
@@ -58,3 +57,4 @@ angular.module('seasonSoundApp')
         ])
 
     new GoogleAuth()
+  ]

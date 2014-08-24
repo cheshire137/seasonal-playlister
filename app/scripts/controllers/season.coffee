@@ -8,7 +8,7 @@
  # Controller of the seasonSoundApp
 ###
 angular.module('seasonSoundApp')
-  .controller 'SeasonCtrl', ['$scope', '$location', '$window', '$routeParams', '$cookieStore', 'NotificationSvc', 'LastfmChartsSvc', 'GoogleAuthSvc', 'GooglePlaylistSvc', 'RdioCatalogSvc', 'RdioPlaylistSvc', ($scope, $location, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc, GoogleAuthSvc, GooglePlaylistSvc, RdioCatalogSvc, RdioPlaylistSvc) ->
+  .controller 'SeasonCtrl', ['$scope', '$location', '$window', '$routeParams', '$cookieStore', 'NotificationSvc', 'LastfmChartsSvc', 'GoogleAuthSvc', 'GooglePlaylistSvc', 'RdioCatalogSvc', 'RdioPlaylistSvc', 'SpotifyAuthSvc', ($scope, $location, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc, GoogleAuthSvc, GooglePlaylistSvc, RdioCatalogSvc, RdioPlaylistSvc, SpotifyAuthSvc) ->
     $scope.lastfm_user = LastfmChartsSvc.user
     $scope.load_status = LastfmChartsSvc.load_status
     $scope.year_charts = LastfmChartsSvc.year_charts
@@ -19,6 +19,7 @@ angular.module('seasonSoundApp')
     $scope.music_service =
       rdio: false
       google: false
+      spotify: false
     $scope.season =
       name: $routeParams.season
       label: undefined
@@ -30,6 +31,9 @@ angular.module('seasonSoundApp')
       rdio:
         have_token: false
         user: $cookieStore.get('rdio_user')
+      spotify:
+        have_token: false
+        access_token: $cookieStore.get('spotify_access_token')
     $scope.playlist =
       name: ''
       description: 'Created with SeasonSound.'
@@ -113,7 +117,14 @@ angular.module('seasonSoundApp')
       win.focus()
 
     $scope.google_authenticate = ->
+      $cookieStore.put('user_return_to', $location.url())
       GoogleAuthSvc.authenticate()
+
+    $scope.spotify_authenticate = ->
+      $cookieStore.put('user_return_to', $location.url())
+      state = Math.random().toString(36).substring(7)
+      $cookieStore.put('spotify_state', state)
+      SpotifyAuthSvc.authenticate(state)
 
     $scope.rdio_authenticate = ->
       $cookieStore.put('user_return_to', $location.url())
@@ -126,6 +137,10 @@ angular.module('seasonSoundApp')
     $scope.$watch 'auth_status.rdio.user', ->
       user = $scope.auth_status.rdio.user
       $scope.auth_status.rdio.have_token = user && user != ''
+
+    $scope.$watch 'auth_status.spotify.access_token', ->
+      token = $scope.auth_status.spotify.access_token
+      $scope.auth_status.spotify.have_token = token && token != ''
 
     $scope.$watch 'auth_status.google.access_token', ->
       token = $scope.auth_status.google.access_token

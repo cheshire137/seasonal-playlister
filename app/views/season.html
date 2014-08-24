@@ -128,7 +128,7 @@
   </div>
   <div class="col-sm-4 col-md-3 sidebar" ng-show="year_chart.filtered_tracks.length &gt; 0">
     <div ng-if="false">
-      <h3 class="sidebar-header">Google Music</h3>
+      <h3 class="sidebar-header"><i class="fa fa-headphones"></i> Google Music</h3>
       <ul class="list-unstyled google-music-list">
         <li ng-if="!auth_status.google.have_token">
           <form ng-submit="google_authenticate()">
@@ -173,7 +173,53 @@
       </ul>
       <hr>
     </div>
-    <h3 class="sidebar-header">Rdio</h3>
+    <h3 class="sidebar-header"><i class="fi-social-spotify"></i> Spotify</h3>
+    <ul class="list-unstyled spotify-list">
+      <li ng-if="!auth_status.spotify.have_token">
+        <form ng-submit="spotify_authenticate()">
+          <div class="form-group">
+            <button type="submit" class="btn btn-spotify">
+              <i class="fi-social-spotify"></i>
+              Sign In With Spotify
+            </button>
+          </div>
+        </form>
+      </li>
+      <li ng-if="auth_status.spotify.have_token">
+        <form ng-submit="create_spotify_playlist()" ng-if="!saved_playlist.id">
+          <div class="form-group">
+            <label class="control-label" for="playlist_name">Playlist name:</label>
+            <input type="text" class="form-control" id="playlist_name" ng-model="playlist.name">
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="playlist_description">Description:</label>
+            <textarea class="form-control" id="playlist_description" ng-model="playlist.description"></textarea>
+          </div>
+          <div class="form-group">
+            <div class="radio">
+              <label>
+                <input type="radio" ng-model="playlist.is_public" ng-value="true">
+                Public
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" ng-model="playlist.is_public" ng-value="false">
+                Private
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-spotify">
+              <i class="fi-social-spotify"></i>
+              Create Playlist
+            </button>
+          </div>
+        </form>
+      </li>
+    </ul>
+    <hr>
+    <h3 class="sidebar-header"><i class="fi-social-rdio"></i> Rdio</h3>
     <ul class="list-unstyled rdio-list">
       <li ng-if="!auth_status.rdio.have_token">
         <form ng-submit="rdio_authenticate()">
@@ -224,8 +270,8 @@
       </p>
     </div>
     <hr>
-    <h3 class="sidebar-header">Options</h3>
-    <ul class="list-unstyled options-list">
+    <h3 class="sidebar-header">Export Playlist</h3>
+    <ul class="list-unstyled export-playlist-list">
       <li>
         <form ng-submit="download_csv()">
           <div class="form-group">

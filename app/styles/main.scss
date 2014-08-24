@@ -75,6 +75,16 @@ a[ng-click], a[clip-click] {
   }
 }
 
+.btn-spotify {
+  background-color: #84BD00;
+  color: white;
+
+  &:hover, &:focus {
+    color: white;
+    background-color: #648F00;
+  }
+}
+
 .footer {
   margin-top: $line-height-computed;
   padding-top: $line-height-computed;
