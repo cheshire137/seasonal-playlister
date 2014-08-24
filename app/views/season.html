@@ -65,7 +65,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="track-row" ng-id="{{track.id}}" ng-class="{matching: track.matching, matched: track.matched, missing: track.missing}" ng-repeat="track in year_chart.filtered_tracks">
+          <tr class="track-row" ng-id="{{track.id}}" ng-class="{matching: track.matching, matched: track.matched, missing: track.missing}" ng-repeat="track in year_chart.filtered_tracks | startFrom:page_info.page*page_info.per_page | limitTo:page_info.per_page">
             <td class="track-image-column">
               <a class="track" ng-show="track.url" ng-href="{{track.url}}" target="_blank">
                 <img ng-src="{{track.large_image}}" class="track-image">
@@ -133,6 +133,31 @@
           </tr>
         </tbody>
       </table>
+      <ul class="pager">
+        <li ng-hide="page_info.page === 0">
+          <a ng-click="page_info.page = 0" tooltip="First Page">
+            &#171; <span class="sr-only">first page</span>
+          </a>
+        </li>
+        <li ng-hide="page_info.page === 0">
+          <a ng-click="page_info.page = page_info.page - 1" tooltip="Previous Page">
+            &lt; <span class="sr-only">previous page</span>
+          </a>
+        </li>
+        <li>
+          Page {{page_info.page + 1}} of {{page_info.total}}
+        </li>
+        <li ng-hide="page_info.page === page_info.total - 1">
+          <a ng-click="page_info.page = page_info.page + 1" tooltip="Next Page">
+            &gt; <span class="sr-only">next page</span>
+          </a>
+        </li>
+        <li ng-hide="page_info.page === page_info.total - 1">
+          <a ng-click="page_info.page = page_info.total - 1" tooltip="Last Page">
+            &#187; <span class="sr-only">last page</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
   <div class="col-sm-4 col-md-3 sidebar" ng-show="year_chart.filtered_tracks.length &gt; 0">

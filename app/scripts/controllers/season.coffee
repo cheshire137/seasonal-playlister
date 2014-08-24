@@ -42,11 +42,23 @@ angular.module('seasonSoundApp')
     $scope.saved_playlist =
       id: null
     $scope.play_count_range = []
+    $scope.page_info =
+      page: 0
+      per_page: 10
+      total: 1
 
     $scope.go_back = ->
       NotificationSvc.wipe_notifications()
       LastfmChartsSvc.reset_charts()
+      $scope.play_count_range.length = 0
       $scope.saved_playlist.id = null
+      $scope.track_filters.min_play_count = 3
+      $scope.track_filters.artist = 'all'
+      $scope.music_service.rdio = false
+      $scope.music_service.google = false
+      $scope.music_service.spotify = false
+      $scope.page_info.page = 0
+      $scope.page_info.total = 1
 
     $scope.season.label = $scope.season.name.charAt(0).toUpperCase() +
                           $scope.season.name.slice(1)
@@ -94,6 +106,11 @@ angular.module('seasonSoundApp')
       return unless $scope.track_filters
       $scope.year_chart.filter_tracks $scope.track_filters
       $scope.saved_playlist.id = null
+      $scope.page_info.total =
+          Math.ceil($scope.year_chart.filtered_tracks.length /
+                    $scope.page_info.per_page)
+      if $scope.page_info.page > $scope.page_info.total
+        $scope.page_info.page = 0
 
     $scope.$watch 'year_chart.tracks_loaded', ->
       return unless $scope.year_chart.tracks_loaded
