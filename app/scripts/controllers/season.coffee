@@ -215,15 +215,13 @@ angular.module('seasonSoundApp')
       $scope.music_service.spotify = true
       $scope.saved_playlist.id = null
       on_matched = (spotify_tracks) ->
-        console.log 'matched', spotify_tracks
         on_playlist_create = (spotify_playlist) ->
-          console.log 'created spotify playlist', spotify_playlist
           $scope.saved_playlist.url = spotify_playlist.external_urls.spotify
           $scope.saved_playlist.id = spotify_playlist.id
           $scope.saved_playlist.name = spotify_playlist.name
           $scope.saved_playlist.is_public = spotify_playlist.public
           on_tracks_success = ->
-            console.log 'finished adding tracks to playlist', spotify_playlist
+            NotificationSvc.notice 'Created Spotify playlist!'
           on_tracks_error = (data) ->
             NotificationSvc.error 'Failed to add tracks to Spotify playlist.'
             console.error data.error.message

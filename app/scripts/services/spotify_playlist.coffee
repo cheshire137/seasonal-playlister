@@ -45,7 +45,7 @@ angular.module('seasonSoundApp')
           @add_chunk_of_tracks access_token, url, tracks, overall_deferred
           return overall_deferred.promise
         i = 0
-        process_next_chunk = ->
+        process_next_chunk = =>
           console.log 'process_next_chunk', i
           deferred = $q.defer()
           track_subset = tracks.slice(i, i + chunk_size)

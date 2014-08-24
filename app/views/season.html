@@ -203,7 +203,7 @@
           Signed in as <strong>{{auth_status.spotify.user}}</strong>.
           <a ng-click="spotify_logout()">Sign Out</a>
         </p>
-        <form ng-submit="create_spotify_playlist()" ng-if="!saved_playlist.id">
+        <form ng-submit="create_spotify_playlist()" ng-if="!saved_playlist.id || !music_service.spotify">
           <div class="form-group">
             <label class="control-label" for="playlist_name">Playlist name:</label>
             <input type="text" class="form-control" id="playlist_name" ng-model="playlist.name">
@@ -269,7 +269,7 @@
           Signed in as <strong>{{auth_status.rdio.user}}</strong>.
           <a ng-click="rdio_logout()">Sign Out</a>
         </p>
-        <form ng-submit="create_rdio_playlist()" ng-if="!saved_playlist.id">
+        <form ng-submit="create_rdio_playlist()" ng-if="!saved_playlist.id || !music_service.rdio">
           <div class="form-group">
             <label class="control-label" for="playlist_name">Playlist name:</label>
             <input type="text" class="form-control" id="playlist_name" ng-model="playlist.name">
