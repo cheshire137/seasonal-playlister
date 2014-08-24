@@ -1,18 +1,22 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
-// bower:scss
-@import "bootstrap-sass-official/assets/stylesheets/bootstrap.scss";
-// endbower
+@import "bootstrap";
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
 
+a, .btn {
+  -webkit-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  -ms-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+}
+
 a {
-  -webkit-transition: color 0.25s ease-in-out;
-  -moz-transition: color 0.25s ease-in-out;
-  -ms-transition: color 0.25s ease-in-out;
-  -o-transition: color 0.25s ease-in-out;
-  transition: color 0.25s ease-in-out;
+  &:hover, &:focus {
+    text-decoration: none;
+  }
 }
 
 a[ng-click], a[clip-click] {
@@ -39,53 +43,76 @@ a[ng-click], a[clip-click] {
   padding: 0.2em 0;
 }
 
+.btn-default {
+  &:hover, &:focus {
+    background-color: lighten($btn-default-bg, 10%);
+  }
+}
+
+$google-red: #dd191d;
+$google-light-red: #e51c23;
 .btn-google {
-  background-color: #e51c23;
+  background-color: $google-red;
+  border-color: darken($google-red, 5%);
   color: white;
 
   &:hover, &:focus {
     color: white;
-    background-color: #dd191d;
+    background-color: $google-light-red;
+    border-color: darken($google-light-red, 5%);
   }
 }
 
+$google-music-orange: #FF863B;
 .btn-google-music {
-  background-color: #FF863B;
+  background-color: darken($google-music-orange, 10%);
+  border-color: darken($google-music-orange, 15%);
   color: white;
 
   &:hover, &:focus {
     color: white;
-    background-color: darken(#FF863B, 5%);
+    background-color: $google-music-orange;
+    border-color: darken($google-music-orange, 5%);
   }
 }
 
+$lastfm-red: #c91e24;
 .btn-lastfm {
-  background-color: #c91e24;
+  background-color: $lastfm-red;
+  border-color: darken($lastfm-red, 5%);
   color: white;
 
   &:hover, &:focus {
     color: white;
-    background-color: #db3d43;
+    background-color: darken($lastfm-red, 10%);
+    border-color: darken($lastfm-red, 15%);
   }
 }
 
+$rdio-blue: #008FD5;
 .btn-rdio {
-  background-color: #008FD5;
+  background-color: darken($rdio-blue, 10%);
+  border-color: darken($rdio-blue, 15%);
   color: white;
 
   &:hover, &:focus {
     color: white;
-    background-color: darken(#008FD5, 5%);
+    background-color: $rdio-blue;
+    border-color: darken($rdio-blue, 5%);
   }
 }
 
+$spotify-green: #648F00;
+$spotify-light-green: #84BD00;
 .btn-spotify {
-  background-color: #84BD00;
+  background-color: $spotify-green;
+  border-color: darken($spotify-green, 5%);
   color: white;
 
   &:hover, &:focus {
     color: white;
-    background-color: #648F00;
+    background-color: $spotify-light-green;
+    border-color: darken($spotify-light-green, 5%);
   }
 }
 
@@ -103,7 +130,8 @@ a[ng-click], a[clip-click] {
     }
 
     &:hover, &:focus {
-      text-decoration: underline;
+      text-decoration: none;
+      color: $link-hover-color;
     }
   }
 }
@@ -158,6 +186,10 @@ h1 {
   }
 }
 
+.neighbors, .track-filter-form {
+  margin-top: $line-height-computed;
+}
+
 .notifications {
   .alert {
     position: fixed;
@@ -171,6 +203,12 @@ h1 {
 
 .nowrap {
   white-space: nowrap;
+}
+
+.page-header {
+  h1 {
+    color: $gray-light;
+  }
 }
 
 .rdio-playlist {
@@ -202,9 +240,9 @@ h1 {
 .sidebar {
   .sidebar-header {
     margin-top: 0;
-    font-size: ($font-size-base * 1.15);
-    font-weight: 700;
-    color: #959595;
+    font-size: ($font-size-base * 0.875);
+    font-weight: $headings-font-weight;
+    color: #666;
     text-transform: uppercase;
     letter-spacing: 1px;
   }
@@ -213,6 +251,13 @@ h1 {
 .site-header {
   .site-title {
     color: $gray;
+
+    a {
+      &, &:link, &:active, &:visited, &:hover, &:focus {
+        text-decoration: none;
+        color: inherit;
+      }
+    }
   }
 }
 
@@ -233,6 +278,11 @@ h1 {
       text-decoration: none;
     }
   }
+}
+
+th {
+  font-weight: normal;
+  color: #666;
 }
 
 .track-row {
@@ -336,14 +386,15 @@ h1 {
       width: 3.2em;
       height: 3.2em;
       line-height: 3.2em;
-      background-color: #efefef;
+      background-color: $gray-dark;
+      color: $gray-lighter;
       text-align: center;
       position: absolute;
       top: 4.4em;
       left: 4.4em;
       border-radius: 50%;
       pointer-events: none;
-      font-weight: $headings-font-weight;
+      text-shadow: 0 1px 1px black;
       -webkit-box-shadow: inset 0 1px 5px 0 rgba(0, 0, 0, 0.3);
       box-shadow: inset 0 1px 5px 0 rgba(0, 0, 0, 0.3);
     }
@@ -383,9 +434,9 @@ h1 {
         padding-left: 10px;
 
         &:hover, &:focus {
-          background-color: lighten($spring-color, 20%);
-          border-color: lighten($spring-color, 10%);
-          color: darken($spring-color, 10%);
+          background-color: lighten($body-bg, 20%);
+          border-color: darken($spring-color, 10%);
+          color: lighten($spring-color, 10%);
         }
       }
 
@@ -399,9 +450,9 @@ h1 {
         padding-right: 7px;
 
         &:hover, &:focus {
-          background-color: lighten($summer-color, 20%);
-          border-color: lighten($summer-color, 10%);
-          color: darken($summer-color, 10%);
+          background-color: lighten($body-bg, 20%);
+          border-color: darken($summer-color, 10%);
+          color: lighten($summer-color, 10%);
         }
       }
 
@@ -419,9 +470,9 @@ h1 {
         padding-left: 7px;
 
         &:hover, &:focus {
-          background-color: lighten($fall-color, 20%);
-          border-color: lighten($fall-color, 10%);
-          color: darken($fall-color, 10%);
+          background-color: lighten($body-bg, 20%);
+          border-color: darken($fall-color, 10%);
+          color: lighten($fall-color, 10%);
         }
       }
 
@@ -435,9 +486,9 @@ h1 {
         padding-right: 7px;
 
         &:hover, &:focus {
-          background-color: lighten($winter-color, 20%);
-          border-color: lighten($winter-color, 10%);
-          color: darken($winter-color, 10%);
+          background-color: lighten($body-bg, 20%);
+          border-color: darken($winter-color, 10%);
+          color: lighten($winter-color, 10%);
         }
       }
     }

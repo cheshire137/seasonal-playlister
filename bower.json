@@ -17,7 +17,8 @@
     "animate-css": "~3.2.0",
     "fontawesome": "~4.1.0",
     "angular-local-storage": "~0.0.7",
-    "foundation-icon-fonts": "zurb/foundation-icon-fonts"
+    "foundation-icon-fonts": "zurb/foundation-icon-fonts",
+    "open-sans-fontface": "~1.1.0"
   },
   "devDependencies": {
     "angular-mocks": "1.2.16",

@@ -127,6 +127,8 @@ angular.module('seasonSoundApp')
       max_play_count = $scope.year_chart.max_play_count()
       if max_play_count < $scope.track_filters.min_play_count
         $scope.track_filters.min_play_count = max_play_count
+      else if max_play_count > 3
+        $scope.track_filters.min_play_count = 3
       $scope.play_count_range =
           $scope.year_chart.get_play_count_range(max_play_count)
       filter_tracks()
