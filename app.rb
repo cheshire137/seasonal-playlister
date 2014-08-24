@@ -90,6 +90,13 @@ get '/auth/:name/callback' do
   redirect "/index.html#/rdio/#{user_for_url}"
 end
 
+get '/auth/failure' do
+  message = URI.escape(params[:message],
+                       Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
+  strategy = params[:rdio]
+  redirect "/index.html#/auth/failure/#{strategy}/#{message}"
+end
+
 get '/rdio/search/artist' do
   content_type :json
   client = get_rdio_client(session)

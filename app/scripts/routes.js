@@ -26,6 +26,24 @@ angular.module('seasonSoundApp').config(['$routeProvider',
           }
         }]
       }
+    }).when('/auth/failure/:strategy/:message', {
+      resolve: {
+        redirect: ['$location', '$route', '$cookieStore', function ($location, $route, $cookieStore) {
+          var strategy_name = $route.current.params.strategy;
+          strategy_name = strategy_name.charAt(0).toUpperCase() +
+                          strategy_name.slice(1);
+          var message = $route.current.params.message;
+          $cookieStore.put('error', 'Failed to authenticate with ' +
+                                    strategy_name + ': ' + message);
+          var user_return_to = $cookieStore.get('user_return_to');
+          if (user_return_to) {
+            $cookieStore.remove('user_return_to');
+            $location.path(user_return_to);
+          } else {
+            $location.path('/');
+          }
+        }]
+      }
     }).when('/rdio/:user', {
       resolve: {
         redirect: ['$location', '$route', '$cookieStore', function ($location, $route, $cookieStore) {
