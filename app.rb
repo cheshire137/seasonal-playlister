@@ -1,3 +1,4 @@
+# encoding=utf-8
 require 'sinatra'
 require 'logger'
 require 'json'
@@ -33,6 +34,10 @@ def get_rdio_client session
     client.secret = session[:rdio_access_secret]
   end
   client
+end
+
+def strip_smart_quotes str
+  str.gsub(/[‘’]/, "'").gsub(/[”“]/, '"')
 end
 
 use OmniAuth::Builder do

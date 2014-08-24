@@ -8,7 +8,7 @@
  # Controller of the seasonSoundApp
 ###
 angular.module('seasonSoundApp')
-  .controller 'SeasonCtrl', ($scope, $location, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc, GoogleAuthSvc, GooglePlaylistSvc) ->
+  .controller 'SeasonCtrl', ($scope, $location, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc, GoogleAuthSvc, GooglePlaylistSvc, RdioCatalogSvc, RdioPlaylistSvc) ->
     $scope.lastfm_user = LastfmChartsSvc.user
     $scope.load_status = LastfmChartsSvc.load_status
     $scope.year_charts = LastfmChartsSvc.year_charts
@@ -16,6 +16,9 @@ angular.module('seasonSoundApp')
     $scope.track_filters =
       min_play_count: $routeParams.min_play_count || 3
       artist: $routeParams.artist || 'all'
+    $scope.music_service =
+      rdio: false
+      google: false
     $scope.season =
       name: $routeParams.season
       label: undefined
@@ -29,11 +32,14 @@ angular.module('seasonSoundApp')
         user: $cookieStore.get('rdio_user')
     $scope.playlist =
       name: ''
-      description: ''
+      description: 'Created with SeasonSound.'
       is_public: true
+    $scope.saved_playlist =
+      id: null
 
-    $scope.wipe_notifications = ->
+    $scope.go_back = ->
       NotificationSvc.wipe_notifications()
+      $scope.saved_playlist.id = null
 
     $scope.season.label = $scope.season.name.charAt(0).toUpperCase() +
                           $scope.season.name.slice(1)
@@ -77,6 +83,7 @@ angular.module('seasonSoundApp')
       return unless $scope.year_chart.tracks_loaded
       return unless $scope.track_filters
       $scope.year_chart.filter_tracks $scope.track_filters
+      $scope.saved_playlist.id = null
 
     $scope.$watch 'year_chart.tracks_loaded', ->
       filter_tracks()
@@ -125,12 +132,36 @@ angular.module('seasonSoundApp')
         $cookieStore.remove('google_access_token')
       GoogleAuthSvc.verify(token).then on_success, on_error
 
-    $scope.create_playlist = ->
-      console.log 'creating playlist'
+    $scope.create_google_playlist = ->
+      $scope.music_service.google = true
+      $scope.music_service.rdio = false
+      $scope.saved_playlist.id = null
       on_success = (data) ->
-        console.log 'created playlist', data
+        NotificationSvc.notice 'Created Google Music playlist!'
+        console.log 'created Google Music playlist', data
       on_error = (data) ->
-        console.error 'failed to create playlist', data
+        NotificationSvc.error 'Failed to create Google Music playlist.'
+        console.error 'failed to create Google Music playlist', data
       GooglePlaylistSvc.create($scope.playlist,
                                $scope.auth_status.access_token).
                         then(on_success, on_error)
+
+    $scope.create_rdio_playlist = ->
+      $scope.music_service.google = false
+      $scope.music_service.rdio = true
+      $scope.saved_playlist.id = null
+      on_matched = (rdio_tracks) ->
+        on_success = (data) ->
+          NotificationSvc.notice 'Created Rdio playlist!'
+          for key, value of data
+            $scope.saved_playlist[key] = value
+        on_error = (data) ->
+          NotificationSvc.error 'Failed to create Rdio playlist.'
+          console.error 'failed to create Rdio playlist', data
+        track_ids = (track.id for track in rdio_tracks)
+        track_ids_str = track_ids.join(',')
+        RdioPlaylistSvc.create($scope.playlist.name,
+                               $scope.playlist.description,
+                               track_ids_str).then(on_success, on_error)
+      RdioCatalogSvc.match_lastfm_tracks $scope.year_chart.filtered_tracks,
+                                         on_matched

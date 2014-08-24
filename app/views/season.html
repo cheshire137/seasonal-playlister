@@ -1,6 +1,6 @@
 <div class="page-header clearfix">
   <h1>
-    <a class="back-link" ng-href="#/lastfm/{{lastfm_user.user_name}}" ng-click="wipe_notifications()" tooltip-placement="right" tooltip="Choose a different season">
+    <a class="back-link" ng-href="#/lastfm/{{lastfm_user.user_name}}" ng-click="go_back()" tooltip-placement="right" tooltip="Choose a different season">
       <span class="glyphicon glyphicon-chevron-left"></span>
     </a>
     <a class="lastfm-user-link" ng-if="lastfm_user.id" href="{{lastfm_user.url}}" tooltip="{{lastfm_user.user_name}}">
@@ -61,6 +61,7 @@
             <th class="track-name-column">Track</th>
             <th class="track-artist-column">Artist</th>
             <th class="nowrap track-play-count-column">Play Count</th>
+            <th class="track-status"></th>
           </tr>
         </thead>
         <tbody>
@@ -90,6 +91,36 @@
             <td class="track-play-count-column">
               {{track.play_count}}x
             </td>
+            <td class="track-status" ng-class="{google: music_service.google, rdio: music_service.rdio}">
+              <span ng-show="track.matching" class="matching-track-label">
+                <i class="fa fa-spinner fa-spin"></i>
+                Finding track in
+                <span ng-show="music_service.rdio">
+                  Rdio...
+                </span>
+                <span ng-show="music_service.google">
+                  Google Music...
+                </span>
+              </span>
+              <span ng-show="track.matched" class="matched-track-label">
+                Found track in
+                <span ng-show="music_service.rdio">
+                  Rdio!
+                </span>
+                <span ng-show="music_service.google">
+                  Google Music!
+                </span>
+              </span>
+              <span ng-show="track.missing" class="missing-track-label">
+                Could not find track in
+                <span ng-show="music_service.rdio">
+                  Rdio.
+                </span>
+                <span ng-show="music_service.google">
+                  Google Music.
+                </span>
+              </span>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -108,7 +139,7 @@
           </form>
         </li>
         <li ng-if="auth_status.google.have_token &amp;&amp; auth_status.google.is_verified">
-          <form ng-submit="create_playlist()">
+          <form ng-submit="create_google_playlist()">
             <div class="form-group">
               <label class="control-label" for="playlist_name">Playlist name:</label>
               <input type="text" class="form-control" id="playlist_name" ng-model="playlist.name">
@@ -140,6 +171,7 @@
           </form>
         </li>
       </ul>
+      <hr>
     </div>
     <h3 class="sidebar-header">Rdio</h3>
     <ul class="list-unstyled rdio-list">
@@ -154,10 +186,44 @@
         </form>
       </li>
       <li ng-if="auth_status.rdio.have_token">
-        Signed in as <strong>{{auth_status.rdio.user}}</strong>.
-        <a ng-click="rdio_logout()">Sign Out</a>
+        <p>
+          Signed in as <strong>{{auth_status.rdio.user}}</strong>.
+          <a ng-click="rdio_logout()">Sign Out</a>
+        </p>
+        <form ng-submit="create_rdio_playlist()" ng-if="!saved_playlist.id">
+          <div class="form-group">
+            <label class="control-label" for="playlist_name">Playlist name:</label>
+            <input type="text" class="form-control" id="playlist_name" ng-model="playlist.name">
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="playlist_description">Description:</label>
+            <textarea class="form-control" id="playlist_description" ng-model="playlist.description"></textarea>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-rdio">
+              <i class="fi-social-rdio"></i>
+              Create Playlist
+            </button>
+          </div>
+        </form>
       </li>
     </ul>
+    <div ng-if="auth_status.rdio.have_token &amp;&amp; saved_playlist.id" class="rdio-playlist clearfix">
+      <hr>
+      <h3 class="sidebar-header">Your Rdio Playlist</h3>
+      <p>
+        <a ng-href="{{saved_playlist.url}}" target="_blank" class="rdio-playlist-link">
+          <img ng-src="{{saved_playlist.image_url}}">
+          <span class="playlist-name">{{saved_playlist.name}}</span>
+          <span class="track-count">
+            {{saved_playlist.song_count}}
+            <span ng-show="saved_playlist.song_count === 1">track</span>
+            <span ng-hide="saved_playlist.song_count === 1">tracks</span>
+          </span>
+        </a>
+      </p>
+    </div>
+    <hr>
     <h3 class="sidebar-header">Options</h3>
     <ul class="list-unstyled options-list">
       <li>

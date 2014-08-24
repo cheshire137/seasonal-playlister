@@ -141,6 +141,32 @@ h1 {
   white-space: nowrap;
 }
 
+.rdio-playlist {
+  .rdio-playlist-link {
+    img {
+      display: block;
+      margin-right: 10px;
+      border-radius: 10px;
+      float: left;
+      max-width: 29%;
+    }
+
+    .playlist-name {
+      display: block;
+    }
+
+    .track-count {
+      font-size: $font-size-small;
+      color: $gray-light;
+      font-style: italic;
+    }
+
+    &:hover, &:focus {
+      text-decoration: none;
+    }
+  }
+}
+
 .sidebar {
   .sidebar-header {
     margin-top: 0;
@@ -149,14 +175,6 @@ h1 {
     color: #959595;
     text-transform: uppercase;
     letter-spacing: 1px;
-  }
-
-  .list-unstyled {
-    & + .sidebar-header {
-      margin-top: $line-height-computed;
-      padding-top: $line-height-computed;
-      border-top: 1px solid $hr-border;
-    }
   }
 }
 
@@ -178,26 +196,49 @@ h1 {
   }
 
   &.missing {
-    background-color: #f2dede;
-    color: #b94a48 !important;
+    td.track-status {
+      background-color: #f2dede;
+      color: #b94a48 !important;
+    }
   }
 
   &.matching {
-    background-color: #d9edf7;
-    color: #3a87ad !important;
+    td.track-status {
+      background-color: #d9edf7;
+      color: #3a87ad !important;
+    }
   }
 
   &.matched {
-    background-color: #0091d4;
-    color: white !important;
+    td.track-status {
+      background-color: #0091d4;
+      color: white !important;
+    }
   }
 
-  img {
+  .track-image-column {
     width: 73px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    border-radius: 10px;
+
+    img {
+      width: 73px;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      border-radius: 10px;
+    }
+  }
+
+  .track-name-column {
+    width: 30%;
+  }
+
+  .track-artist-column {
+    width: 25%;
+  }
+
+  .track-play-count-column {
+    width: 14%;
+    text-align: center;
   }
 }
 
