@@ -4,15 +4,15 @@ Make spring, summer, fall, and winter playlists from your listening history on L
 
 ## Screenshots
 
-![Last.fm user choice](https://raw.githubusercontent.com/moneypenny/seasonal-playlister/master/screenshot1.png)
+![Last.fm user choice](https://raw.githubusercontent.com/moneypenny/seasonal-playlister/master/screenshot_1.png)
 
 ----
 
-![Year and season choice](https://raw.githubusercontent.com/moneypenny/seasonal-playlister/master/screenshot2.png)
+![Year and season choice](https://raw.githubusercontent.com/moneypenny/seasonal-playlister/master/screenshot_2.png)
 
 ----
 
-![Playlist creation](https://raw.githubusercontent.com/moneypenny/seasonal-playlister/master/screenshot3.png)
+![Playlist creation](https://raw.githubusercontent.com/moneypenny/seasonal-playlister/master/screenshot_3.png)
 
 ## To Do
 
