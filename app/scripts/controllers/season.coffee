@@ -115,6 +115,9 @@ angular.module('seasonSoundApp')
       update_total_pages()
       if $scope.page_info.page > $scope.page_info.total
         $scope.page_info.page = 0
+      max_play_count = $scope.year_chart.max_play_count()
+      $scope.play_count_range =
+          $scope.year_chart.get_play_count_range(max_play_count)
       if $scope.play_count_range.length < 1
         $scope.play_count_range.push 1
 

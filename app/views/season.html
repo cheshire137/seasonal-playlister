@@ -9,7 +9,29 @@
     <span class="title">
       {{season.label}} {{year_chart.year}} Scrobbles
       <span class="page-info" ng-show="year_chart.filtered_tracks.length &gt; 0">
-        Page {{page_info.page + 1}} of {{page_info.total}}
+        <span ng-hide="page_info.page === 0">
+          <a ng-click="page_info.page = 0">
+            &laquo; First <span class="sr-only">first page</span>
+          </a>
+        </span>
+        <span ng-hide="page_info.page === 0">
+          <a ng-click="page_info.page = page_info.page - 1">
+            &lsaquo; Previous <span class="sr-only">previous page</span>
+          </a>
+        </span>
+        <span>
+          Page {{page_info.page + 1}} of {{page_info.total}}
+        </span>
+        <span ng-hide="page_info.page === page_info.total - 1">
+          <a ng-click="page_info.page = page_info.page + 1">
+            Next &rsaquo; <span class="sr-only">next page</span>
+          </a>
+        </span>
+        <span ng-hide="page_info.page === page_info.total - 1">
+          <a ng-click="page_info.page = page_info.total - 1">
+            Last &raquo; <span class="sr-only">last page</span>
+          </a>
+        </span>
       </span>
     </span>
   </h1>
@@ -136,26 +158,26 @@
       </table>
       <ul class="pager">
         <li ng-hide="page_info.page === 0">
-          <a ng-click="page_info.page = 0" tooltip="First Page">
-            &#171; <span class="sr-only">first page</span>
+          <a ng-click="page_info.page = 0">
+            &laquo; First <span class="sr-only">first page</span>
           </a>
         </li>
         <li ng-hide="page_info.page === 0">
-          <a ng-click="page_info.page = page_info.page - 1" tooltip="Previous Page">
-            &lt; <span class="sr-only">previous page</span>
+          <a ng-click="page_info.page = page_info.page - 1">
+            &lsaquo; Previous <span class="sr-only">previous page</span>
           </a>
         </li>
         <li>
           Page {{page_info.page + 1}} of {{page_info.total}}
         </li>
         <li ng-hide="page_info.page === page_info.total - 1">
-          <a ng-click="page_info.page = page_info.page + 1" tooltip="Next Page">
-            &gt; <span class="sr-only">next page</span>
+          <a ng-click="page_info.page = page_info.page + 1">
+            Next &rsaquo; <span class="sr-only">next page</span>
           </a>
         </li>
         <li ng-hide="page_info.page === page_info.total - 1">
-          <a ng-click="page_info.page = page_info.total - 1" tooltip="Last Page">
-            &#187; <span class="sr-only">last page</span>
+          <a ng-click="page_info.page = page_info.total - 1">
+            Last &raquo; <span class="sr-only">last page</span>
           </a>
         </li>
       </ul>
