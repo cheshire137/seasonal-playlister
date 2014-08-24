@@ -6,7 +6,12 @@
     <a class="lastfm-user-link" ng-if="lastfm_user.id" href="{{lastfm_user.url}}" tooltip="{{lastfm_user.user_name}}">
       <img class="lastfm-user-image img-circle" height="64" ng-src="{{lastfm_user.medium_image}}" width="64">
     </a>
-    <span class="title">{{season.label}} {{year_chart.year}}</span>
+    <span class="title">
+      {{season.label}} {{year_chart.year}}
+      <span class="page-info" ng-show="year_chart.filtered_tracks.length &gt; 0">
+        Page {{page_info.page + 1}} of {{page_info.total}}
+      </span>
+    </span>
   </h1>
   <form class="track-filter-form form-inline" ng-if="year_chart.tracks.length &gt; 0">
     <div class="form-group">

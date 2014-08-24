@@ -42,6 +42,11 @@ class YearChart
         result = result && track.artist == filters.artist
       if result
         @filtered_tracks.push track
+    # Sort by play count descending
+    @filtered_tracks.sort (a, b) ->
+      return 1 if a.play_count < b.play_count
+      return -1 if a.play_count > b.play_count
+      0
 
   season_chart_count: (season) ->
     switch season
