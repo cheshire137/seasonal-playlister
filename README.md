@@ -2,6 +2,18 @@
 
 Make spring, summer, fall, and winter playlists from your listening history on Last.fm.
 
+## Screenshots
+
+![Last.fm user choice](https://raw.githubusercontent.com/moneypenny/seasonal-playlister/master/screenshot1.png)
+
+----
+
+![Year and season choice](https://raw.githubusercontent.com/moneypenny/seasonal-playlister/master/screenshot2.png)
+
+----
+
+![Playlist creation](https://raw.githubusercontent.com/moneypenny/seasonal-playlister/master/screenshot3.png)
+
 ## How to Develop
 
 1. `npm install -g bower`
