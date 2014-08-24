@@ -15,13 +15,9 @@
   </h1>
   <form class="track-filter-form form-inline" ng-if="year_chart.tracks.length &gt; 0">
     <div class="form-group">
-      Showing {{year_chart.filtered_tracks.length}} of {{year_chart.tracks.length}}
-      <span ng-show="year_chart.tracks.length === 1">
-        track
-      </span>
-      <span ng-show="year_chart.tracks.length !== 1">
-        tracks
-      </span>
+      Filtered tracks:
+      {{year_chart.filtered_tracks.length}} of {{year_chart.tracks.length}}
+      total
     </div>
     <div class="form-group" ng-show="play_count_range.length &gt; 1">
       <label class="control-label" for="track_filters_min_play_count">
