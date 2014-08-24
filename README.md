@@ -20,6 +20,8 @@ Make spring, summer, fall, and winter playlists from your listening history on L
 
 - Add ability to create playlists with Google Music. Maybe wait until there's an official public API. :/
 - Allow signing into Last.fm to access private scrobbles.
+- Offer sorting filtered tracks by name, artist, and play count.
+- Tests!
 
 ## How to Develop
 
