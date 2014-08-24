@@ -8,7 +8,7 @@
  # Service in the seasonSoundApp.
 ###
 angular.module('seasonSoundApp')
-  .service 'RdioPlaylistSvc', ($q, $http) ->
+  .service 'RdioPlaylistSvc', ['$q', '$http', ($q, $http) ->
     class RdioPlaylist
       create: (name, description, tracks) ->
         deferred = $q.defer()
@@ -32,3 +32,4 @@ angular.module('seasonSoundApp')
         deferred.promise
 
     new RdioPlaylist()
+  ]

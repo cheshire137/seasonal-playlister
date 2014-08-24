@@ -8,7 +8,7 @@
  # Controller of the seasonSoundApp
 ###
 angular.module('seasonSoundApp')
-  .controller 'SeasonCtrl', ['$scope', '$location', '$window', '$routeParams', '$cookieStore', 'NotificationSvc', 'LastfmChartsSvc', 'GoogleAuthSvc', 'GooglePlaylistSvc', 'RdioCatalogSvc', 'RdioPlaylistSvc', 'SpotifyAuthSvc', 'SpotifyCatalogSvc', ($scope, $location, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc, GoogleAuthSvc, GooglePlaylistSvc, RdioCatalogSvc, RdioPlaylistSvc, SpotifyAuthSvc, SpotifyCatalogSvc) ->
+  .controller 'SeasonCtrl', ['$scope', '$location', '$window', '$routeParams', '$cookieStore', 'NotificationSvc', 'LastfmChartsSvc', 'GoogleAuthSvc', 'GooglePlaylistSvc', 'RdioCatalogSvc', 'RdioPlaylistSvc', 'SpotifyAuthSvc', 'SpotifyCatalogSvc', 'SpotifyPlaylistSvc', ($scope, $location, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc, GoogleAuthSvc, GooglePlaylistSvc, RdioCatalogSvc, RdioPlaylistSvc, SpotifyAuthSvc, SpotifyCatalogSvc, SpotifyPlaylistSvc) ->
     $scope.lastfm_user = LastfmChartsSvc.user
     $scope.load_status = LastfmChartsSvc.load_status
     $scope.year_charts = LastfmChartsSvc.year_charts
@@ -216,6 +216,28 @@ angular.module('seasonSoundApp')
       $scope.saved_playlist.id = null
       on_matched = (spotify_tracks) ->
         console.log 'matched', spotify_tracks
+        on_playlist_create = (spotify_playlist) ->
+          console.log 'created spotify playlist', spotify_playlist
+          $scope.saved_playlist.url = spotify_playlist.external_urls.spotify
+          $scope.saved_playlist.id = spotify_playlist.id
+          $scope.saved_playlist.name = spotify_playlist.name
+          $scope.saved_playlist.is_public = spotify_playlist.public
+          on_tracks_success = ->
+            console.log 'finished adding tracks to playlist', spotify_playlist
+          on_tracks_error = (data) ->
+            NotificationSvc.error 'Failed to add tracks to Spotify playlist.'
+            console.error data.error.message
+          SpotifyPlaylistSvc.add_tracks($scope.auth_status.spotify.access_token,
+                                        $scope.auth_status.spotify.user,
+                                        spotify_playlist, spotify_tracks).
+                             then(on_tracks_success, on_tracks_error)
+        on_playlist_error = (data) ->
+          NotificationSvc.error 'Failed to create Spotify playlist.'
+          console.error 'failed to create Spotify playlist', data
+        SpotifyPlaylistSvc.create($scope.auth_status.spotify.access_token,
+                                  $scope.auth_status.spotify.user,
+                                  $scope.playlist).
+                           then(on_playlist_create, on_playlist_error)
       on_match_error = ->
         console.error 'failed to match Spotify tracks to Last.fm tracks'
       SpotifyCatalogSvc.match_lastfm_tracks($scope.year_chart.filtered_tracks).

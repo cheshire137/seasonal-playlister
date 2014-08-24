@@ -95,47 +95,38 @@
               <span ng-show="track.matching" class="matching-track-label">
                 <i class="fa fa-spinner fa-spin"></i>
                 Finding track in
-                <span ng-show="music_service.rdio">
-                  <i class="fi-social-rdio"></i>
-                  Rdio...
+                <span ng-show="music_service.rdio" class="nowrap">
+                  <i class="fi-social-rdio"></i> Rdio...
                 </span>
-                <span ng-show="music_service.google">
-                  <i class="fa fa-headphones"></i>
-                  Google Music...
+                <span ng-show="music_service.google" class="nowrap">
+                  <i class="fa fa-headphones"></i> Google Music...
                 </span>
-                <span ng-show="music_service.spotify">
-                  <i class="fi-social-spotify"></i>
-                  Spotify...
+                <span ng-show="music_service.spotify" class="nowrap">
+                  <i class="fi-social-spotify"></i> Spotify...
                 </span>
               </span>
               <span ng-show="track.matched" class="matched-track-label">
                 Found track in
-                <span ng-show="music_service.rdio">
-                  <i class="fi-social-rdio"></i>
-                  Rdio!
+                <span ng-show="music_service.rdio" class="nowrap">
+                  <i class="fi-social-rdio"></i> Rdio!
                 </span>
-                <span ng-show="music_service.google">
-                  <i class="fa fa-headphones"></i>
-                  Google Music!
+                <span ng-show="music_service.google" class="nowrap">
+                  <i class="fa fa-headphones"></i> Google Music!
                 </span>
-                <span ng-show="music_service.spotify">
-                  <i class="fi-social-spotify"></i>
-                  Spotify!
+                <span ng-show="music_service.spotify" class="nowrap">
+                  <i class="fi-social-spotify"></i> Spotify!
                 </span>
               </span>
               <span ng-show="track.missing" class="missing-track-label">
                 Could not find track in
-                <span ng-show="music_service.rdio">
-                  <i class="fi-social-rdio"></i>
-                  Rdio.
+                <span ng-show="music_service.rdio" class="nowrap">
+                  <i class="fi-social-rdio"></i> Rdio.
                 </span>
-                <span ng-show="music_service.google">
-                  <i class="fa fa-headphones"></i>
-                  Google Music.
+                <span ng-show="music_service.google" class="nowrap">
+                  <i class="fa fa-headphones"></i> Google Music.
                 </span>
-                <span ng-show="music_service.spotify">
-                  <i class="fi-social-spotify"></i>
-                  Spotify.
+                <span ng-show="music_service.spotify" class="nowrap">
+                  <i class="fi-social-spotify"></i> Spotify.
                 </span>
               </span>
             </td>
@@ -218,10 +209,6 @@
             <input type="text" class="form-control" id="playlist_name" ng-model="playlist.name">
           </div>
           <div class="form-group">
-            <label class="control-label" for="playlist_description">Description:</label>
-            <textarea class="form-control" id="playlist_description" ng-model="playlist.description"></textarea>
-          </div>
-          <div class="form-group">
             <div class="radio">
               <label>
                 <input type="radio" ng-model="playlist.is_public" ng-value="true">
@@ -244,6 +231,24 @@
         </form>
       </li>
     </ul>
+    <div ng-if="auth_status.spotify.have_token &amp;&amp; saved_playlist.id &amp;&amp; music_service.spotify" class="spotify-playlist clearfix">
+      <hr>
+      <h3 class="sidebar-header">
+        <i class="fi-social-spotify"></i>
+        Your Spotify Playlist
+      </h3>
+      <p>
+        <a ng-href="{{saved_playlist.url}}" target="_blank" class="spotify-playlist-link">
+          <span class="playlist-name">{{saved_playlist.name}}</span>
+          <span class="public-flag" ng-show="saved_playlist.is_public">
+            Public playlist
+          </span>
+          <span class="private-flag" ng-hide="saved_playlist.is_public">
+            Private playlist
+          </span>
+        </a>
+      </p>
+    </div>
     <hr>
     <h3 class="sidebar-header">
       <i class="fi-social-rdio"></i> Rdio
@@ -282,9 +287,12 @@
         </form>
       </li>
     </ul>
-    <div ng-if="auth_status.rdio.have_token &amp;&amp; saved_playlist.id" class="rdio-playlist clearfix">
+    <div ng-if="auth_status.rdio.have_token &amp;&amp; saved_playlist.id &amp;&amp; music_service.rdio" class="rdio-playlist clearfix">
       <hr>
-      <h3 class="sidebar-header">Your Rdio Playlist</h3>
+      <h3 class="sidebar-header">
+        <i class="fi-social-rdio"></i>
+        Your Rdio Playlist
+      </h3>
       <p>
         <a ng-href="{{saved_playlist.url}}" target="_blank" class="rdio-playlist-link">
           <img ng-src="{{saved_playlist.image_url}}">

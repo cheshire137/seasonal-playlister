@@ -26,7 +26,6 @@ angular.module('seasonSoundApp')
           else
             deferred.resolve(spotify_tracks)
         found_spotify_track = (spotify_track) =>
-          console.log 'found_spotify_track', spotify_track
           lastfm_track.matching = false
           lastfm_track.matched = true
           spotify_tracks.push spotify_track
@@ -46,17 +45,14 @@ angular.module('seasonSoundApp')
 
       match_lastfm_tracks: (lastfm_tracks) ->
         deferred = $q.defer()
-        console.log 'matching', lastfm_tracks.length, 'Last.fm tracks to Spotify tracks'
         @match_lastfm_track 0, lastfm_tracks, [], deferred
         deferred.promise
 
       search_tracks_by_artist: (artist_name, track_name) ->
-        console.log 'search_tracks_by_artist', artist_name, track_name
         deferred = $q.defer()
         on_success = (data, status, headers, config) =>
           if data.tracks && data.tracks.items && data.tracks.items.length > 0
             track = data.tracks.items[0]
-            console.log 'found track', track
             deferred.resolve track
           else
             deferred.reject
@@ -72,7 +68,6 @@ angular.module('seasonSoundApp')
             status: status
             headers: headers
             config: config
-        console.log 'GET', @get_track_search_url(artist_name, track_name)
         $http(
           url: @get_track_search_url(artist_name, track_name)
           method: 'GET'

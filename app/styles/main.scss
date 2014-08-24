@@ -154,6 +154,7 @@ h1 {
     width: 20em;
     margin-left: -10em;
     top: 20px;
+    z-index: 1000;
   }
 }
 
@@ -201,6 +202,25 @@ h1 {
 .site-header {
   .site-title {
     color: $gray;
+  }
+}
+
+.spotify-playlist {
+  .spotify-playlist-link {
+    .playlist-name {
+      display: block;
+    }
+
+    .private-flag, .public-flag {
+      font-size: $font-size-small;
+      color: $gray-light;
+      display: block;
+      margin-top: 5px;
+    }
+
+    &:hover, &:focus {
+      text-decoration: none;
+    }
   }
 }
 
