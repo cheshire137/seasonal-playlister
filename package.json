@@ -1,9 +1,11 @@
 {
   "name": "seasonsound",
   "version": "0.0.0",
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "grunt": "^0.4.1",
+    "grunt-cli": "^0.1.13"
+  },
+  "devDependencies": {
     "grunt-autoprefixer": "^0.7.3",
     "grunt-concurrent": "^0.5.0",
     "grunt-contrib-clean": "^0.5.0",
@@ -33,6 +35,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "postinstall": "echo postinstall time; ./node_modules/grunt-cli/bin/grunt build"
   }
 }

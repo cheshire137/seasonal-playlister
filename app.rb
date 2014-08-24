@@ -46,7 +46,7 @@ end
 
 use Rack::Static, urls: ['/styles', '/scripts/controllers', '/scripts/services',
                          '/scripts/models'], root: settings.assets_folder
-use Rack::Static, urls: ['/views'], root: settings.public_folder
+use Rack::Static, urls: ['/views', '/images'], root: settings.public_folder
 use Rack::Static, urls: ['/bower_components'], root: settings.bower_root
 
 get '/' do
