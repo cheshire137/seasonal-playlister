@@ -15,51 +15,48 @@ angular.module('seasonSoundApp').config(['$routeProvider',
       title: 'Create a Playlist'
     }).when('/logged-out/rdio', {
       resolve: {
-        redirect:
-          function ($location, $cookieStore) {
-            $cookieStore.remove('rdio_user');
-            var user_return_to = $cookieStore.get('user_return_to');
-            if (user_return_to) {
-              $cookieStore.remove('user_return_to');
-              $location.path(user_return_to);
-            } else {
-              $location.path('/');
-            }
+        redirect: ['$location', '$cookieStore', function ($location, $cookieStore) {
+          $cookieStore.remove('rdio_user');
+          var user_return_to = $cookieStore.get('user_return_to');
+          if (user_return_to) {
+            $cookieStore.remove('user_return_to');
+            $location.path(user_return_to);
+          } else {
+            $location.path('/');
           }
+        }]
       }
     }).when('/rdio/:user', {
       resolve: {
-        redirect:
-          function ($location, $route, $cookieStore) {
-            var rdio_user = $route.current.params.user;
-            if (rdio_user) {
-              $cookieStore.put('rdio_user', rdio_user);
-            }
-            var user_return_to = $cookieStore.get('user_return_to');
-            if (user_return_to) {
-              $cookieStore.remove('user_return_to');
-              $location.path(user_return_to);
-            } else {
-              $location.path('/');
-            }
+        redirect: ['$location', '$route', '$cookieStore', function ($location, $route, $cookieStore) {
+          var rdio_user = $route.current.params.user;
+          if (rdio_user) {
+            $cookieStore.put('rdio_user', rdio_user);
           }
+          var user_return_to = $cookieStore.get('user_return_to');
+          if (user_return_to) {
+            $cookieStore.remove('user_return_to');
+            $location.path(user_return_to);
+          } else {
+            $location.path('/');
+          }
+        }]
       }
     }).when('/access_token=:access_token&token_type=:token_type&expires_in=:expires_in', {
       resolve: {
-        redirect:
-          function ($location, $route, $cookieStore) {
-            var access_token = $route.current.params.access_token;
-            if (access_token) {
-              $cookieStore.put('access_token', access_token);
-            }
-            var user_return_to = $cookieStore.get('user_return_to');
-            if (user_return_to) {
-              $cookieStore.remove('user_return_to');
-              $location.path(user_return_to);
-            } else {
-              $location.path('/');
-            }
+        redirect: ['$location', '$route', '$cookieStore', function ($location, $route, $cookieStore) {
+          var access_token = $route.current.params.access_token;
+          if (access_token) {
+            $cookieStore.put('access_token', access_token);
           }
+          var user_return_to = $cookieStore.get('user_return_to');
+          if (user_return_to) {
+            $cookieStore.remove('user_return_to');
+            $location.path(user_return_to);
+          } else {
+            $location.path('/');
+          }
+        }]
       }
     }).otherwise({
       redirectTo: '/'

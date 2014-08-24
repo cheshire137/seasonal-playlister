@@ -8,7 +8,7 @@
  # Controller of the seasonSoundApp
 ###
 angular.module('seasonSoundApp')
-  .controller 'SeasonCtrl', ($scope, $location, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc, GoogleAuthSvc, GooglePlaylistSvc, RdioCatalogSvc, RdioPlaylistSvc) ->
+  .controller 'SeasonCtrl', ['$scope', '$location', '$window', '$routeParams', '$cookieStore', 'NotificationSvc', 'LastfmChartsSvc', 'GoogleAuthSvc', 'GooglePlaylistSvc', 'RdioCatalogSvc', 'RdioPlaylistSvc', ($scope, $location, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc, GoogleAuthSvc, GooglePlaylistSvc, RdioCatalogSvc, RdioPlaylistSvc) ->
     $scope.lastfm_user = LastfmChartsSvc.user
     $scope.load_status = LastfmChartsSvc.load_status
     $scope.year_charts = LastfmChartsSvc.year_charts
@@ -103,7 +103,8 @@ angular.module('seasonSoundApp')
 
     $scope.download_csv = ->
       csv = $scope.year_chart.to_csv()
-      $window.open(encodeURI(csv), '_blank')
+      win = $window.open(encodeURI(csv), '_blank')
+      win.focus()
 
     $scope.download_json = ->
       json = $scope.year_chart.to_json()
@@ -173,3 +174,4 @@ angular.module('seasonSoundApp')
                                track_ids_str).then(on_success, on_error)
       RdioCatalogSvc.match_lastfm_tracks $scope.year_chart.filtered_tracks,
                                          on_matched
+  ]

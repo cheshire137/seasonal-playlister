@@ -8,7 +8,7 @@
  # Controller of the seasonSoundApp
 ###
 angular.module('seasonSoundApp')
-  .controller 'YearsCtrl', ($scope, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc) ->
+  .controller 'YearsCtrl', ['$scope', '$routeParams', '$cookieStore', 'NotificationSvc', 'LastfmChartsSvc', ($scope, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc) ->
     $scope.lastfm_user = LastfmChartsSvc.user
     $scope.load_status = LastfmChartsSvc.load_status
     $scope.year_charts = LastfmChartsSvc.year_charts
@@ -42,3 +42,4 @@ angular.module('seasonSoundApp')
         for i in [0...array.length] by count
           range.push i
       range
+  ]
