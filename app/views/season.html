@@ -186,6 +186,10 @@
         </form>
       </li>
       <li ng-if="auth_status.spotify.have_token">
+        <p ng-show="auth_status.spotify.user">
+          Signed in as <strong>{{auth_status.spotify.user}}</strong>.
+          <a ng-click="spotify_logout()">Sign Out</a>
+        </p>
         <form ng-submit="create_spotify_playlist()" ng-if="!saved_playlist.id">
           <div class="form-group">
             <label class="control-label" for="playlist_name">Playlist name:</label>
@@ -232,7 +236,7 @@
         </form>
       </li>
       <li ng-if="auth_status.rdio.have_token">
-        <p>
+        <p ng-show="auth_status.rdio.user">
           Signed in as <strong>{{auth_status.rdio.user}}</strong>.
           <a ng-click="rdio_logout()">Sign Out</a>
         </p>

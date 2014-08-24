@@ -34,6 +34,7 @@ angular.module('seasonSoundApp')
       spotify:
         have_token: false
         access_token: $cookieStore.get('spotify_access_token')
+        user: $cookieStore.get('spotify_user')
     $scope.playlist =
       name: ''
       description: 'Created with SeasonSound.'
@@ -126,6 +127,13 @@ angular.module('seasonSoundApp')
       $cookieStore.put('spotify_state', state)
       SpotifyAuthSvc.authenticate(state)
 
+    $scope.spotify_logout = ->
+      $scope.auth_status.spotify.have_token = false
+      $scope.auth_status.spotify.access_token = ''
+      $scope.auth_status.spotify.user = ''
+      $cookieStore.remove('spotify_access_token')
+      $cookieStore.remove('spotify_user')
+
     $scope.rdio_authenticate = ->
       $cookieStore.put('user_return_to', $location.url())
       $window.location.href = '/auth/rdio'
@@ -141,6 +149,15 @@ angular.module('seasonSoundApp')
     $scope.$watch 'auth_status.spotify.access_token', ->
       token = $scope.auth_status.spotify.access_token
       $scope.auth_status.spotify.have_token = token && token != ''
+      return unless $scope.auth_status.spotify.have_token
+      on_success = (data) ->
+        $scope.auth_status.spotify.user = data.id
+        $cookieStore.put('spotify_user', $scope.auth_status.spotify.user)
+      on_error = ->
+        $scope.auth_status.spotify.access_token = ''
+        $scope.auth_status.spotify.have_token = false
+        $cookieStore.remove('spotify_access_token')
+      SpotifyAuthSvc.current_user(token).then on_success, on_error
 
     $scope.$watch 'auth_status.google.access_token', ->
       token = $scope.auth_status.google.access_token
@@ -189,4 +206,6 @@ angular.module('seasonSoundApp')
                                track_ids_str).then(on_success, on_error)
       RdioCatalogSvc.match_lastfm_tracks $scope.year_chart.filtered_tracks,
                                          on_matched
+
+    $scope.create_spotify_playlist = ->
   ]
