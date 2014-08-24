@@ -1,6 +1,7 @@
 GIT
   remote: https://github.com/nixme/rdio-ruby.git
   revision: f95ba6285ef0376f14d939832d49b1b75d316a3d
+  ref: f95ba
   specs:
     rdio-ruby (0.0.1)
       faraday (~> 0.8)
