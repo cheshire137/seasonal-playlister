@@ -39,6 +39,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
+    "postinstall": "node_modules/.bin/bower install; bundle",
     "test": "grunt test"
   }
 }

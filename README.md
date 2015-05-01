@@ -28,8 +28,6 @@ Make spring, summer, fall, and winter playlists from your listening history on L
 1. `npm install -g bower`
 1. `npm install -g grunt-cli`
 1. `npm install`
-1. `bower install`
-1. `bundle`
 1. [Register for an Rdio API account](https://secure.mashery.com/login/rdio.mashery.com/).
 1. `cp env.sh.sample env.sh`
 1. Modify env.sh and fill in your Rdio API key and secret, as well as a session secret.
