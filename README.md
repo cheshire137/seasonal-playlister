@@ -30,14 +30,16 @@ Make spring, summer, fall, and winter playlists from your listening history on L
 1. `npm install -g bower`
 1. `npm install -g grunt-cli`
 1. [Register for an Rdio API account](https://secure.mashery.com/login/rdio.mashery.com/).
+1. [Register for a Last.fm API account](http://www.last.fm/api/account/create).
 1. `cp env.sh.sample env.sh`
-1. Modify env.sh and fill in your Rdio API key and secret, as well as a session secret.
+1. Modify env.sh and fill in your Rdio and Last.fm API keys and secrets, as well as a session key. You can run `openssl rand -base64 40` to generate a random session key.
 1. `source env.sh`
 
 ### Every Time
 
 1. `npm install`
 1. `foreman start -f Procfile.dev` to start the Sinatra server that serves up the AngularJS app as well as handles requests to Rdio, and to watch for changes to files as you develop and recompile CoffeeScript and SASS as necessary.
+1. Visit [localhost:5000](http://localhost:5000).
 
 ## How to Deploy to Heroku
 
