@@ -51,6 +51,14 @@ angular.module('seasonSoundApp').config(['$routeProvider',
           redirect_user($cookieStore, $location);
         }]
       }
+    }).when('/lastfm_auth/:lastfm_token', {
+      resolve: {
+        redirect: ['$location', '$route', '$cookieStore', function ($location, $route, $cookieStore) {
+          var lastfm_token = $route.current.params.lastfm_token;
+          $cookieStore.put('lastfm_token', lastfm_token);
+          $location.path('/');
+        }]
+      }
     }).when('/access_token=:access_token&token_type=:token_type&expires_in=:expires_in&state=:state', {
       resolve: {
         redirect: ['$location', '$route', '$cookieStore', function ($location, $route, $cookieStore) {

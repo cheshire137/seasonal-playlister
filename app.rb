@@ -66,6 +66,10 @@ get '/scripts/routes.js' do
   send_file File.join(settings.public_folder, 'scripts', 'routes.js')
 end
 
+get '/lastfm_auth' do
+  redirect "/index.html#/lastfm_auth/#{params[:token]}"
+end
+
 post '/google/playlist' do
   content_type :json
   playlist = GooglePlaylist.new(params)

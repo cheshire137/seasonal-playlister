@@ -7,7 +7,7 @@
   <p>
     Look up a
     <a href="http://www.last.fm/">Last.fm</a>
-    user's listening history to make playlists.
+    user's public listening history:
   </p>
   <form class="form-inline" ng-submit="go_to_seasons_list()">
     <div class="form-group">
@@ -21,4 +21,13 @@
       Get Scrobbles
     </button>
   </form>
+  <p>
+    Or authenticate with Last.fm to access your private scrobbles:
+  </p>
+  <p>
+    <button class="btn btn-lastfm btn-lg" ng-click="init_lastfm_auth()" type="button">
+      <i class="fi-social-lastfm"></i>
+      Sign in to Last.fm
+    </button>
+  </p>
 </div>
