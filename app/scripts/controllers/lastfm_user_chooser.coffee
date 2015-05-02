@@ -8,7 +8,9 @@
  # Controller of the seasonSoundApp
 ###
 angular.module('seasonSoundApp')
-  .controller 'LastfmUserChooserCtrl', ['$scope', '$location', 'LastfmChartsSvc', ($scope, $location, LastfmChartsSvc) ->
+  .controller 'LastfmUserChooserCtrl',
+  ['$scope', '$location', 'LastfmChartsSvc',
+  ($scope, $location, LastfmChartsSvc) ->
     $scope.lastfm_user = LastfmChartsSvc.user
 
     $scope.go_to_seasons_list = ->

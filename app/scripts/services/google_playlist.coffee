@@ -22,8 +22,8 @@ angular.module('seasonSoundApp')
             headers: headers
             config: config
         $http(
-          method: 'POST',
-          url: '/google/playlist',
+          method: 'POST'
+          url: '/google/playlist'
           params:
             name: playlist.name
             description: playlist.description

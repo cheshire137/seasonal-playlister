@@ -27,3 +27,9 @@ angular.module('seasonSoundApp', [
               return input.slice(start);
             };
           });
+
+angular.element(document).ready(['$http', function($http) {
+  $http.get('/config.json', function(config) {
+    window.seasonSoundConfig = config;
+  });
+}]);
