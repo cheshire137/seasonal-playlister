@@ -144,6 +144,10 @@ form {
       }
     }
   }
+
+  &.lastfm-user-lookup-form {
+    margin-bottom: $line-height-computed * 2;
+  }
 }
 
 h1 {

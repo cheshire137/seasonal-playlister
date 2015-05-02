@@ -5,6 +5,9 @@ require 'json'
 require 'omniauth'
 require 'omniauth-rdio'
 require 'rdio'
+require 'digest'
+require 'open-uri'
+require 'nokogiri'
 require_relative 'backend/google_playlist'
 
 RDIO_API_KEY = ENV['RDIO_API_KEY']
@@ -67,7 +70,20 @@ get '/scripts/routes.js' do
 end
 
 get '/lastfm_auth' do
-  redirect "/index.html#/lastfm_auth/#{params[:token]}"
+  token = params[:token]
+  query_params = {api_key: ENV['LASTFM_API_KEY'],
+                  method: 'auth.getsession',
+                  token: token}
+  signature = query_params.map {|k, v| "#{k}#{v}" }.join('') +
+              ENV['LASTFM_API_SECRET']
+  signature = Digest::MD5.hexdigest(signature)
+  # See http://www.last.fm/api/show/auth.getSession
+  url = 'http://ws.audioscrobbler.com/2.0/?' +
+        query_params.map {|k, v| "#{k}=#{v}" }.join('&') +
+        "&api_sig=#{signature}"
+  lastfm_session_xml = open(url).read
+  doc = Nokogiri::XML(lastfm_session_xml)
+  lastfm_session_key = doc.at_xpath('//lfm//session//key').content
 end
 
 post '/google/playlist' do
