@@ -12,6 +12,7 @@ require_relative 'backend/google_playlist'
 
 RDIO_API_KEY = ENV['RDIO_API_KEY']
 RDIO_API_SHARED_SECRET = ENV['RDIO_API_SHARED_SECRET']
+LASTFM_API_URL = 'http://ws.audioscrobbler.com/2.0/'
 
 enable :sessions, :logging
 set :session_secret, ENV['SESSION_KEY']
@@ -78,7 +79,7 @@ get '/lastfm_auth' do
               ENV['LASTFM_API_SECRET']
   signature = Digest::MD5.hexdigest(signature)
   # See http://www.last.fm/api/show/auth.getSession
-  url = 'http://ws.audioscrobbler.com/2.0/?' +
+  url = "#{LASTFM_API_URL}?" +
         query_params.map {|k, v| "#{k}=#{v}" }.join('&') +
         "&api_sig=#{signature}"
   lastfm_session_xml = open(url).read
