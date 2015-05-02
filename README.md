@@ -37,7 +37,7 @@ Make spring, summer, fall, and winter playlists from your listening history on L
 ### Every Time
 
 1. `npm install`
-1. `foreman start` to start the Sinatra server that serves up the AngularJS app as well as handles requests to Rdio, and to watch for changes to files as you develop and recompile CoffeeScript and SASS as necessary.
+1. `foreman start -f Procfile.dev` to start the Sinatra server that serves up the AngularJS app as well as handles requests to Rdio, and to watch for changes to files as you develop and recompile CoffeeScript and SASS as necessary.
 
 ## How to Deploy to Heroku
 
