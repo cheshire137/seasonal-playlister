@@ -83,7 +83,11 @@ get '/lastfm_auth' do
         "&api_sig=#{signature}"
   lastfm_session_xml = open(url).read
   doc = Nokogiri::XML(lastfm_session_xml)
+  lastfm_user = doc.at_xpath('//lfm//session//name').content
   lastfm_session_key = doc.at_xpath('//lfm//session//key').content
+  session[:lastfm_user] = lastfm_user
+  session[:lastfm_session_key] = lastfm_session_key
+  redirect "/index.html#/lastfm_auth/#{lastfm_user}"
 end
 
 post '/google/playlist' do

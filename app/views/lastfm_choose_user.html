@@ -4,10 +4,23 @@
   </h1>
 </div>
 <div class="jumbotron text-center">
+  <div ng-show="lastfm_auth.is_authenticated">
+    <p>
+      You are signed in as Last.fm user <strong>{{lastfm_auth.user_name}}</strong>.
+    </p>
+    <button class="btn btn-lastfm btn-lg get-auth-scrobbles-button" ng-click="get_authenticated_scrobbles()" type="button">
+      <i class="fi-social-lastfm"></i>
+      Get Your Scrobbles
+    </button>
+    <p>
+      Or
+    </p>
+  </div>
   <p>
-    Look up a
-    <a href="http://www.last.fm/">Last.fm</a>
-    user's public listening history:
+    Look up
+    <span ng-show="lastfm_auth.is_authenticated">another Last.fm user's</span>
+    <span ng-hide="lastfm_auth.is_authenticated">a Last.fm user's</span>
+    public listening history:
   </p>
   <form class="form-inline lastfm-user-lookup-form" ng-submit="go_to_seasons_list()">
     <div class="form-group">
@@ -21,13 +34,15 @@
       Get Scrobbles
     </button>
   </form>
-  <p>
-    Or authenticate with Last.fm to access your private scrobbles:
-  </p>
-  <p>
-    <button class="btn btn-lastfm btn-lg" ng-click="init_lastfm_auth()" type="button">
-      <i class="fi-social-lastfm"></i>
-      Sign in to Last.fm
-    </button>
-  </p>
+  <div ng-hide="lastfm_auth.is_authenticated">
+    <p>
+      Or authenticate with Last.fm to access your private scrobbles:
+    </p>
+    <p>
+      <button class="btn btn-lastfm btn-lg" ng-click="init_lastfm_auth()" type="button">
+        <i class="fi-social-lastfm"></i>
+        Sign in to Last.fm
+      </button>
+    </p>
+  </div>
 </div>
