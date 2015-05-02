@@ -32,7 +32,6 @@ Make spring, summer, fall, and winter playlists from your listening history on L
 1. (Optional) [Register for a Last.fm API account](http://www.last.fm/api/account/create).
 1. `cp env.sh.sample env.sh`
 1. Modify env.sh and fill in your Rdio and Last.fm API keys and secrets, as well as a session key. You can run `openssl rand -base64 40` to generate a random session key.
-1. `source env.sh`
 
 ### Every Time
 
