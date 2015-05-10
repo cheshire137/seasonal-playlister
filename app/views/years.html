@@ -50,19 +50,19 @@
 <div class="clearfix text-center">
   <div class="year-{{year_chart.year}} year-container" ng-repeat="year_chart in year_charts">
     <div class="season-circle">
-      <a class="quarter quarter-spring" ng-href="#/lastfm/{{lastfm_user.user_name}}/{{year_chart.year}}/spring" tooltip="Spring" tooltip-placement="left">
+      <a class="quarter quarter-spring" ng-if="is_season_visible('spring', year_chart.year)" ng-href="#/lastfm/{{lastfm_user.user_name}}/{{year_chart.year}}/spring" tooltip="Spring" tooltip-placement="left">
         <span class="sr-only">Spring</span>
         <img src="images/spring.png" alt="Spring" class="season-icon">
       </a>
-      <a class="quarter quarter-summer" ng-href="#/lastfm/{{lastfm_user.user_name}}/{{year_chart.year}}/summer" tooltip="Summer" tooltip-placement="right">
+      <a class="quarter quarter-summer" ng-if="is_season_visible('summer', year_chart.year)" ng-href="#/lastfm/{{lastfm_user.user_name}}/{{year_chart.year}}/summer" tooltip="Summer" tooltip-placement="right">
         <span class="sr-only">Summer</span>
         <img src="images/summer.png" alt="Summer" class="season-icon">
       </a>
-      <a class="quarter quarter-fall" ng-href="#/lastfm/{{lastfm_user.user_name}}/{{year_chart.year}}/fall" tooltip="Fall" tooltip-placement="left">
+      <a class="quarter quarter-fall" ng-if="is_season_visible('fall', year_chart.year)" ng-href="#/lastfm/{{lastfm_user.user_name}}/{{year_chart.year}}/fall" tooltip="Fall" tooltip-placement="left">
         <span class="sr-only">Fall</span>
         <img src="images/fall.png" alt="Fall" class="season-icon">
       </a>
-      <a class="quarter quarter-winter" ng-href="#/lastfm/{{lastfm_user.user_name}}/{{year_chart.year}}/winter" tooltip="Winter" tooltip-placement="right">
+      <a class="quarter quarter-winter" ng-if="is_season_visible('winter', year_chart.year)" ng-href="#/lastfm/{{lastfm_user.user_name}}/{{year_chart.year}}/winter" tooltip="Winter" tooltip-placement="right">
         <span class="sr-only">Winter</span>
         <img src="images/winter.png" alt="Winter" class="season-icon">
       </a>

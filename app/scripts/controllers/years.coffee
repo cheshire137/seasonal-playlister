@@ -43,4 +43,19 @@ angular.module('seasonSoundApp')
         for i in [0...array.length] by count
           range.push i
       range
+
+    $scope.is_season_visible = (season, year) ->
+      cur_date = new Date()
+      return true if year < cur_date.getFullYear()
+      cur_month = cur_date.getMonth() + 1 # e.g., 5 = May
+      if season == 'spring' # March, April, May
+        return true if cur_month >= 3 && cur_month < 6
+      if season == 'summer' # June, July, August
+        return true if cur_month >= 6 && cur_month < 9
+      if season == 'fall' # September, October, November
+        return true if cur_month >= 9 && cur_month < 12
+      if season == 'winter' # January, February, December
+        return true if cur_month >= 1 && cur_month < 3
+        return true if cur_month == 12
+      false
   ]
