@@ -70,8 +70,8 @@ angular.module('seasonSoundApp')
             status: status
             headers: headers
             config: config
-        $http.get(LastfmSvc.get_user_neighbors_url(user_name)).
-              success(on_success).error(on_error)
+        LastfmSvc.get_user_neighbors_url user_name, (url) ->
+          $http.get(url).success(on_success).error(on_error)
         deferred.promise
 
       get_user_info: (user_name) ->
@@ -88,8 +88,8 @@ angular.module('seasonSoundApp')
             status: status
             headers: headers
             config: config
-        $http.get(LastfmSvc.get_user_info_url(user_name)).
-              success(on_success).error(on_error)
+        LastfmSvc.get_user_info_url user_name, (url) ->
+          $http.get(url).success(on_success).error(on_error)
         deferred.promise
 
       get_charts_after_cutoff_date: (charts_data, cutoff_date) ->
@@ -115,8 +115,8 @@ angular.module('seasonSoundApp')
             headers: headers
             config: config
           @load_status.charts = true
-        $http.get(LastfmSvc.get_weekly_chart_list_url(user)).
-              success(on_success).error(on_error)
+        LastfmSvc.get_weekly_chart_list_url user, (url) ->
+          $http.get(url).success(on_success).error(on_error)
         deferred.promise
 
       get_weekly_track_chart: (user, chart) ->
@@ -145,8 +145,8 @@ angular.module('seasonSoundApp')
               status: status
               headers: headers
               config: config
-          $http.get(LastfmSvc.get_weekly_track_chart_url(user, chart)).
-                success(on_success).error(on_error)
+          LastfmSvc.get_weekly_track_chart_url user, chart, (url) ->
+            $http.get(url).success(on_success).error(on_error)
         deferred.promise
 
     new LastfmCharts()
