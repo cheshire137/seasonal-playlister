@@ -45,6 +45,7 @@ Make spring, summer, fall, and winter playlists from your listening history on L
 1. `git remote add heroku git@heroku.com:yourherokuapp.git`
 1. `heroku config:add BUILDPACK_URL=https://github.com/heroku/heroku-buildpack-ruby.git`
 1. `heroku config:set NODE_ENV=production`
+1. `heroku config:set LASTFM_API_KEY=your_lastfm_api_key`
 1. `heroku config:set RACK_ENV=production`
 1. `heroku config:set RDIO_API_KEY=your_rdio_api_key`
 1. `heroku config:set RDIO_API_SHARED_SECRET=your_rdio_shared_secret`
