@@ -1,1 +1,1 @@
-rack: rackup -s puma -p $PORT
+rack: bundle exec rackup -s puma -p $PORT
