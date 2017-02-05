@@ -34,7 +34,7 @@ npm install -g grunt-cli
 cp env.sh.sample env.sh
 ```
 
-(Optional) [Register for a Last.fm API account](http://www.last.fm/api/account/create).
+[Register for a Last.fm API account](http://www.last.fm/api/account/create).
 Modify env.sh and fill in your Last.fm API keys and secrets, as well as a session key.
 You can run `openssl rand -base64 40` to generate a random session key.
 
