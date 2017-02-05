@@ -26,6 +26,8 @@ Make spring, summer, fall, and winter playlists from your listening history on L
 
 ### First Time
 
+You will need npm, Ruby, and bundler installed.
+
 ```bash
 npm install -g bower
 npm install -g grunt-cli
@@ -39,8 +41,7 @@ You can run `openssl rand -base64 40` to generate a random session key.
 ### Every Time
 
 ```bash
-npm install
-gem install foreman
+npm install # also installs necessary gems and bower packages
 foreman start -f Procfile.dev
 open http://localhost:5000
 ```
