@@ -2,7 +2,6 @@
 require 'sinatra'
 require 'logger'
 require 'json'
-require 'omniauth'
 require 'digest'
 require 'open-uri'
 require 'nokogiri'
