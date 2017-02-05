@@ -26,29 +26,39 @@ Make spring, summer, fall, and winter playlists from your listening history on L
 
 ### First Time
 
-1. `npm install -g bower`
-1. `npm install -g grunt-cli`
-1. (Optional) [Register for an Rdio API account](https://secure.mashery.com/login/rdio.mashery.com/).
-1. (Optional) [Register for a Last.fm API account](http://www.last.fm/api/account/create).
-1. `cp env.sh.sample env.sh`
-1. Modify env.sh and fill in your Rdio and Last.fm API keys and secrets, as well as a session key. You can run `openssl rand -base64 40` to generate a random session key.
+```bash
+npm install -g bower
+npm install -g grunt-cli
+cp env.sh.sample env.sh
+```
+
+(Optional) [Register for a Last.fm API account](http://www.last.fm/api/account/create).
+Modify env.sh and fill in your Last.fm API keys and secrets, as well as a session key.
+You can run `openssl rand -base64 40` to generate a random session key.
 
 ### Every Time
 
-1. `npm install`
-1. `foreman start -f Procfile.dev` to start the Sinatra server that serves up the AngularJS app as well as handles requests to Rdio, and to watch for changes to files as you develop and recompile CoffeeScript and SASS as necessary.
-1. Visit [localhost:5000](http://localhost:5000).
+```bash
+npm install
+gem install foreman
+foreman start -f Procfile.dev
+open http://localhost:5000
+```
+
+The Sinatra server serves up the AngularJS app as well as watches for changes to
+files as you develop, to recompile CoffeeScript and SASS as necessary.
 
 ## How to Deploy to Heroku
 
-1. [Create a new app on Heroku](https://dashboard.heroku.com/apps).
-1. `git remote add heroku git@heroku.com:yourherokuapp.git`
-1. `heroku config:add BUILDPACK_URL=https://github.com/heroku/heroku-buildpack-ruby.git`
-1. `heroku config:set NODE_ENV=production`
-1. `heroku config:set LASTFM_API_KEY=your_lastfm_api_key`
-1. `heroku config:set RACK_ENV=production`
-1. `heroku config:set RDIO_API_KEY=your_rdio_api_key`
-1. `heroku config:set RDIO_API_SHARED_SECRET=your_rdio_shared_secret`
-1. `heroku config:set SESSION_KEY=your_session_key`
-1. `./deploy.sh`
-1. `heroku ps:scale web=1`
+[Create a new app on Heroku](https://dashboard.heroku.com/apps).
+
+```bash
+git remote add heroku git@heroku.com:yourherokuapp.git
+heroku config:add BUILDPACK_URL=https://github.com/heroku/heroku-buildpack-ruby.git
+heroku config:set NODE_ENV=production
+heroku config:set LASTFM_API_KEY=your_lastfm_api_key
+heroku config:set RACK_ENV=production
+heroku config:set SESSION_KEY=your_session_key
+./deploy.sh
+heroku ps:scale web=1
+```
