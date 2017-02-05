@@ -8,7 +8,7 @@
  # Controller of the seasonSoundApp
 ###
 angular.module('seasonSoundApp')
-  .controller 'SeasonCtrl', ['$scope', '$location', '$window', '$routeParams', '$cookieStore', 'NotificationSvc', 'LastfmChartsSvc', 'GoogleAuthSvc', 'GooglePlaylistSvc', 'RdioCatalogSvc', 'RdioPlaylistSvc', 'SpotifyAuthSvc', 'SpotifyCatalogSvc', 'SpotifyPlaylistSvc', ($scope, $location, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc, GoogleAuthSvc, GooglePlaylistSvc, RdioCatalogSvc, RdioPlaylistSvc, SpotifyAuthSvc, SpotifyCatalogSvc, SpotifyPlaylistSvc) ->
+  .controller 'SeasonCtrl', ['$scope', '$location', '$window', '$routeParams', '$cookieStore', 'NotificationSvc', 'LastfmChartsSvc', 'GoogleAuthSvc', 'GooglePlaylistSvc', 'SpotifyAuthSvc', 'SpotifyCatalogSvc', 'SpotifyPlaylistSvc', ($scope, $location, $window, $routeParams, $cookieStore, NotificationSvc, LastfmChartsSvc, GoogleAuthSvc, GooglePlaylistSvc, SpotifyAuthSvc, SpotifyCatalogSvc, SpotifyPlaylistSvc) ->
     $scope.lastfm_user = LastfmChartsSvc.user
     $scope.load_status = LastfmChartsSvc.load_status
     $scope.year_charts = LastfmChartsSvc.year_charts
@@ -17,7 +17,6 @@ angular.module('seasonSoundApp')
       min_play_count: 3
       artist: 'all'
     $scope.music_service =
-      rdio: false
       google: false
       spotify: false
     $scope.season =
@@ -28,9 +27,6 @@ angular.module('seasonSoundApp')
         have_token: false
         access_token: $cookieStore.get('google_access_token')
         is_verified: false
-      rdio:
-        have_token: false
-        user: $cookieStore.get('rdio_user')
       spotify:
         have_token: false
         access_token: $cookieStore.get('spotify_access_token')
@@ -54,7 +50,6 @@ angular.module('seasonSoundApp')
       $scope.saved_playlist.id = null
       $scope.track_filters.min_play_count = 3
       $scope.track_filters.artist = 'all'
-      $scope.music_service.rdio = false
       $scope.music_service.google = false
       $scope.music_service.spotify = false
       $scope.page_info.page = 0
@@ -167,18 +162,6 @@ angular.module('seasonSoundApp')
       $cookieStore.remove('spotify_access_token')
       $cookieStore.remove('spotify_user')
 
-    $scope.rdio_authenticate = ->
-      $cookieStore.put('user_return_to', $location.url())
-      $window.location.href = '/auth/rdio'
-
-    $scope.rdio_logout = ->
-      $cookieStore.put('user_return_to', $location.url())
-      $window.location.href = '/logout/rdio'
-
-    $scope.$watch 'auth_status.rdio.user', ->
-      user = $scope.auth_status.rdio.user
-      $scope.auth_status.rdio.have_token = user && user != ''
-
     $scope.$watch 'auth_status.spotify.access_token', ->
       token = $scope.auth_status.spotify.access_token
       $scope.auth_status.spotify.have_token = token && token != ''
@@ -208,7 +191,6 @@ angular.module('seasonSoundApp')
 
     $scope.create_google_playlist = ->
       $scope.music_service.google = true
-      $scope.music_service.rdio = false
       $scope.music_service.spotify = false
       $scope.saved_playlist.id = null
       $scope.year_chart.reset_track_flags()
@@ -222,31 +204,8 @@ angular.module('seasonSoundApp')
                                $scope.auth_status.access_token).
                         then(on_success, on_error)
 
-    $scope.create_rdio_playlist = ->
-      $scope.music_service.google = false
-      $scope.music_service.rdio = true
-      $scope.music_service.spotify = false
-      $scope.saved_playlist.id = null
-      $scope.year_chart.reset_track_flags()
-      on_matched = (rdio_tracks) ->
-        on_success = (data) ->
-          NotificationSvc.notice 'Created Rdio playlist!'
-          for key, value of data
-            $scope.saved_playlist[key] = value
-        on_error = (data) ->
-          NotificationSvc.error 'Failed to create Rdio playlist.'
-          console.error 'failed to create Rdio playlist', data
-        track_ids = (track.id for track in rdio_tracks)
-        track_ids_str = track_ids.join(',')
-        RdioPlaylistSvc.create($scope.playlist.name,
-                               $scope.playlist.description,
-                               track_ids_str).then(on_success, on_error)
-      RdioCatalogSvc.match_lastfm_tracks $scope.year_chart.filtered_tracks,
-                                         on_matched
-
     $scope.create_spotify_playlist = ->
       $scope.music_service.google = false
-      $scope.music_service.rdio = false
       $scope.music_service.spotify = true
       $scope.saved_playlist.id = null
       $scope.year_chart.reset_track_flags()

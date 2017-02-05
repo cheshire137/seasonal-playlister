@@ -84,21 +84,3 @@ post '/google/playlist' do
   status response.code
   response.body.to_json
 end
-
-get '/auth/:name/callback' do
-  # See https://github.com/nixme/omniauth-rdio for description of object
-  auth = request.env['omniauth.auth']
-  session[:rdio_user] = auth['info']['name']
-  session[:rdio_access_token] = auth['credentials']['token']
-  session[:rdio_access_secret] = auth['credentials']['secret']
-  user_for_url = URI.escape(session[:rdio_user],
-                            Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
-  redirect "/index.html#/rdio/#{user_for_url}"
-end
-
-get '/auth/failure' do
-  message = URI.escape(params[:message],
-                       Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
-  strategy = params[:rdio]
-  redirect "/index.html#/auth/failure/#{strategy}/#{message}"
-end

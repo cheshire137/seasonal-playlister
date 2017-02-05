@@ -22,35 +22,6 @@ angular.module('seasonSoundApp').config(['$routeProvider',
       templateUrl: '/views/season.html',
       controller: 'SeasonCtrl',
       title: 'Create a Playlist'
-    }).when('/logged-out/rdio', {
-      resolve: {
-        redirect: ['$location', '$cookieStore', function ($location, $cookieStore) {
-          $cookieStore.remove('rdio_user');
-          redirect_user($cookieStore, $location);
-        }]
-      }
-    }).when('/auth/failure/:strategy/:message', {
-      resolve: {
-        redirect: ['$location', '$route', '$cookieStore', function ($location, $route, $cookieStore) {
-          var strategy_name = $route.current.params.strategy;
-          strategy_name = strategy_name.charAt(0).toUpperCase() +
-                          strategy_name.slice(1);
-          var message = $route.current.params.message;
-          $cookieStore.put('error', 'Failed to authenticate with ' +
-                                    strategy_name + ': ' + message);
-          redirect_user($cookieStore, $location);
-        }]
-      }
-    }).when('/rdio/:user', {
-      resolve: {
-        redirect: ['$location', '$route', '$cookieStore', function ($location, $route, $cookieStore) {
-          var rdio_user = $route.current.params.user;
-          if (rdio_user) {
-            $cookieStore.put('rdio_user', rdio_user);
-          }
-          redirect_user($cookieStore, $location);
-        }]
-      }
     }).when('/lastfm_auth/:lastfm_user', {
       resolve: {
         redirect: ['$location', '$route', '$cookieStore', function ($location, $route, $cookieStore) {

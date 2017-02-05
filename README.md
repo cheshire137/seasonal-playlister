@@ -1,6 +1,6 @@
 # SeasonSound
 
-Make spring, summer, fall, and winter playlists from your listening history on Last.fm. Create your playlists on Spotify and Rdio, or export them as CSV or JSON.
+Make spring, summer, fall, and winter playlists from your listening history on Last.fm. Create your playlists on Spotify or export them as CSV or JSON.
 
 **[Use SeasonSound online](http://season-sound.herokuapp.com/)**
 

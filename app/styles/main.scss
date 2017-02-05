@@ -89,19 +89,6 @@ $lastfm-red: #c91e24;
   }
 }
 
-$rdio-blue: #008FD5;
-.btn-rdio {
-  background-color: darken($rdio-blue, 10%);
-  border-color: darken($rdio-blue, 15%);
-  color: white;
-
-  &:hover, &:focus {
-    color: white;
-    background-color: $rdio-blue;
-    border-color: darken($rdio-blue, 5%);
-  }
-}
-
 $spotify-green: #648F00;
 $spotify-light-green: #84BD00;
 .btn-spotify {
@@ -219,32 +206,6 @@ h1 {
   }
 }
 
-.rdio-playlist {
-  .rdio-playlist-link {
-    img {
-      display: block;
-      margin-right: 10px;
-      border-radius: 10px;
-      float: left;
-      max-width: 29%;
-    }
-
-    .playlist-name {
-      display: block;
-    }
-
-    .track-count {
-      font-size: $font-size-small;
-      color: $gray-light;
-      font-style: italic;
-    }
-
-    &:hover, &:focus {
-      text-decoration: none;
-    }
-  }
-}
-
 .sidebar {
   .sidebar-header {
     margin-top: 0;
@@ -318,11 +279,6 @@ th {
 
   &.matching {
     td.track-status {
-      &.rdio {
-        background-color: #d9edf7;
-        color: #3a87ad !important;
-      }
-
       &.spotify {
         background-color: #F1F9DD;
         color: #67851C !important;
@@ -332,11 +288,6 @@ th {
 
   &.matched {
     td.track-status {
-      &.rdio {
-        background-color: #0091d4;
-        color: white !important;
-      }
-
       &.spotify {
         background-color: #648F00;
         color: white !important;
